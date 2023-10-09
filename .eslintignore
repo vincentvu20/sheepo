@@ -1,0 +1,8 @@
+scripts/*
+plugins/*
+patches/*
+*.d.ts
+src/*/__mocks__/*.js
+tailwind.config.ts
+postcss.config.cjs
+tsconfig.json

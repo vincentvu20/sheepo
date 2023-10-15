@@ -15,7 +15,7 @@ const instance = axios.create({
     'cache-control': 'no-cache',
     Accept: '*/*',
   },
-  baseURL: process.env.API_BASE_URL,
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
 instance.interceptors.request.use(

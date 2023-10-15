@@ -1,3 +1,3 @@
 export enum API_PATH {
-  LOGIN = '/login',
+  LOGIN = '/auth/login',
 }

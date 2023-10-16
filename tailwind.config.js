@@ -18,8 +18,8 @@ module.exports = {
         '2xl': '40rem',
       },
       screens: {
-        '2xsmall': '320px',
-        xsmall: '620px',
+        '2xsmall': { max: '640px', min: '320px' },
+        xsmall: { max: '959px', min: '320px' },
         xxsmall: '960px',
         small: '1024px',
         medium: '1280px',

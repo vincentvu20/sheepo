@@ -34,7 +34,9 @@ module.exports = {
       colors: {
         black: '#000000',
         white: '#ffffff',
+        white10: 'rgba(0, 0, 0, 0.10)',
         error: '#FF3333',
+        errorLight: 'rgba(255, 51, 51, 0.10);',
         error10: 'rgba(255, 51, 51, 0.10)',
         black40: 'rgba(0, 0, 0, 0.4)',
         black60: 'rgba(0, 0, 0, 0.6)',

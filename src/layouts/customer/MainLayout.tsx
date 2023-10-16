@@ -3,7 +3,7 @@ import { Footer, Header } from '@/components';
 
 export const MainLayout = () => {
   return (
-    <div className="flex flex-col items-center">
+    <div>
       <Header />
       <div className="min-h-screen w-full">
         <Outlet />

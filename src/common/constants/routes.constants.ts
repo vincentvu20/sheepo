@@ -1,4 +1,8 @@
-export enum ROUTES {
-  CMS_LOGIN = '/cms/login',
-  CMS_DASHBOARD = '/cms/dashboard',
+export enum ROUTES_CMS {
+  LOGIN = '/cms/login',
+  USERS = '/cms/users',
+  DASHBOARD = '/cms',
+  BOOKINGS = '/cms/bookings',
+  CATEGORIES = '/cms/categories',
+  PRODUCTS = '/cms/products',
 }

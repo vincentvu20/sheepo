@@ -4,6 +4,10 @@ import { IColorType } from './types';
 
 export const theme = createTheme({
   colors: colors,
+  typography: {
+    fontFamily: 'Satoshi, Integral CF, sans-serif',
+    fontSize: 16,
+  },
   palette: {
     mode: 'light',
     primary: {
@@ -43,4 +47,5 @@ export const theme = createTheme({
       contrastText: colors.white,
     },
   },
+  components: {},
 } as ThemeOptions & { colors: IColorType });

@@ -7,55 +7,53 @@ export const theme = createTheme({
   typography: {
     fontFamily: 'Satoshi, Integral CF, sans-serif',
     h1: {
-      fontSize: 40,
+      fontSize: 64,
       fontWeight: 700,
-      fontFamily: 'Satoshi',
+      fontFamily: 'Integral CF',
       fontStyle: 'normal',
       lineHeight: 'normal',
     },
     h2: {
-      fontSize: 36,
+      fontSize: 48,
       fontWeight: 700,
-      fontFamily: 'Satoshi',
+      fontFamily: 'Integral CF',
       fontStyle: 'normal',
       lineHeight: 'normal',
     },
-    h3: {
-      fontSize: 20,
-      fontWeight: 700,
-      fontFamily: 'Satoshi',
-      fontStyle: 'normal',
-      lineHeight: 'normal',
-    },
-    h4: {
+    subtitle1: {
       fontSize: 16,
-      fontWeight: 700,
+      fontWeight: 400,
       fontFamily: 'Satoshi',
       fontStyle: 'normal',
       lineHeight: 'normal',
     },
-    h5: {
+    subtitle2: {
       fontSize: 14,
       fontWeight: 400,
       fontFamily: 'Satoshi',
       fontStyle: 'normal',
       lineHeight: 'normal',
     },
-    subtitle1: {
-      fontSize: 64,
+    body1: {
+      fontSize: 24,
       fontWeight: 700,
-      fontFamily: 'Integral CF',
+      fontFamily: 'Satoshi',
       fontStyle: 'normal',
       lineHeight: 'normal',
-      textAlign: 'left',
     },
-    subtitle2: {
-      fontSize: 48,
+    body2: {
+      fontSize: 20,
       fontWeight: 700,
-      fontFamily: 'Integral CF',
+      fontFamily: 'Satoshi',
       fontStyle: 'normal',
       lineHeight: 'normal',
-      textAlign: 'center',
+    },
+    caption: {
+      fontSize: 36,
+      fontWeight: 700,
+      fontFamily: 'Satoshi',
+      fontStyle: 'normal',
+      lineHeight: 'normal',
     },
     button: {
       fontSize: 16,

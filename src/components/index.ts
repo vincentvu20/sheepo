@@ -5,3 +5,4 @@ export * from './Button';
 export * from './Footer';
 export * from './Header';
 export * from './Dropdown';
+export * from './Checkbox';

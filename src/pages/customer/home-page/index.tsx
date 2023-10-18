@@ -16,8 +16,7 @@ export const HomePage = () => {
             onConfirm: () => {},
             onCancel: () => {},
           });
-        }}
-      >
+        }}>
         Test modal
       </Button>
       <Button
@@ -26,8 +25,7 @@ export const HomePage = () => {
           ModalServices.showMessageSuccess({
             message: 'Successfully',
           });
-        }}
-      >
+        }}>
         Test toast success
       </Button>
 
@@ -38,8 +36,7 @@ export const HomePage = () => {
           ModalServices.showMessageError({
             message: 'Failure',
           });
-        }}
-      >
+        }}>
         Test toast error
       </Button>
 

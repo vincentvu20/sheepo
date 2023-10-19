@@ -12,11 +12,19 @@ function showConfirmModal(props: IConfirmModalProps) {
 }
 
 function showMessageSuccess({ message }: { message: string }) {
-  toast(message, { position: 'top-right', type: 'success' } as any);
+  toast(message, {
+    position: 'top-right',
+    type: 'success',
+    style: { marginTop: 50 },
+  } as any);
 }
 
 function showMessageError({ message }: { message: string }) {
-  toast(message, { position: 'top-right', type: 'error' } as any);
+  toast(message, {
+    position: 'top-right',
+    type: 'error',
+    style: { marginTop: 50 },
+  } as any);
 }
 
 export const ModalServices = {

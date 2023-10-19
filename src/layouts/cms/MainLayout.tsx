@@ -27,14 +27,6 @@ import Header from './Header';
 
 const drawerWidth = 300;
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-}
-
 const DrawerData = [
   {
     label: 'Users',
@@ -58,16 +50,11 @@ const DrawerData = [
   },
 ];
 
-export const MainLayout = (props: Props) => {
-  const { window } = props;
+export const MainLayout = () => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const navigate = useNavigate();
-  const [mobileOpen, setMobileOpen] = useState(false);
   const { accessTokenCms } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
   const onLogout = () => {
     dispatch(logoutCms());
@@ -78,11 +65,19 @@ export const MainLayout = (props: Props) => {
     ModalServices.showMessageError({ message: 'Comming soon!' });
   };
 
-  const handleRedirect = (path: string) => {
+  const handleRedirect = (path: string, index: number) => {
     return () => {
+      setSelectedIndex(index);
       navigate(path);
     };
   };
+
+  const setInitSelectedTab = useCallback(() => {
+    const listPath = DrawerData.map(item => item.path);
+    const defaultIdx = listPath.findIndex(i => location.href.includes(i));
+
+    setSelectedIndex(defaultIdx);
+  }, []);
 
   const checkLogged = useCallback(() => {
     if (!accessTokenCms) {
@@ -95,6 +90,10 @@ export const MainLayout = (props: Props) => {
     checkLogged();
   }, [checkLogged]);
 
+  useEffect(() => {
+    setInitSelectedTab();
+  }, [setInitSelectedTab]);
+
   // render
   const drawer = (
     <div>
@@ -104,10 +103,7 @@ export const MainLayout = (props: Props) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <AdbIcon
-          sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-          color="primary"
-        />
+        <AdbIcon sx={{ display: 'flex', mr: 1 }} color="primary" />
         <Typography
           variant="h6"
           noWrap
@@ -115,7 +111,7 @@ export const MainLayout = (props: Props) => {
           href="/cms"
           sx={{
             mr: 2,
-            display: { xs: 'none', md: 'flex' },
+            display: 'flex',
             fontFamily: 'monospace',
             fontWeight: 700,
             letterSpacing: '.3rem',
@@ -127,9 +123,11 @@ export const MainLayout = (props: Props) => {
       </Toolbar>
       <Divider />
       <List sx={{ marginTop: 2 }}>
-        {DrawerData.map(data => (
+        {DrawerData.map((data, idx) => (
           <ListItem key={data.label} disablePadding>
-            <ListItemButton onClick={handleRedirect(data.path)}>
+            <ListItemButton
+              selected={selectedIndex === idx}
+              onClick={handleRedirect(data.path, idx)}>
               <ListItemIcon>{data.icons}</ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{ style: { fontWeight: 500 } }}
@@ -142,9 +140,6 @@ export const MainLayout = (props: Props) => {
       </List>
     </div>
   );
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box
@@ -161,32 +156,15 @@ export const MainLayout = (props: Props) => {
         <Box
           component="nav"
           sx={{
-            width: { sm: drawerWidth },
-            maxWidth: { sm: drawerWidth },
-            flexShrink: { sm: 0 },
+            width: drawerWidth,
+            maxWidth: drawerWidth,
+            flexShrink: 0,
           }}
           aria-label="dashboard-menu">
           <Drawer
-            container={container}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true,
-            }}
-            sx={{
-              display: { xs: 'block', sm: 'none' },
-              '& .MuiDrawer-paper': {
-                boxSizing: 'border-box',
-                width: drawerWidth,
-              },
-            }}>
-            {drawer}
-          </Drawer>
-          <Drawer
             variant="permanent"
             sx={{
-              display: { xs: 'none', sm: 'block' },
+              display: 'block',
               '& .MuiDrawer-paper': {
                 boxSizing: 'border-box',
                 width: drawerWidth,

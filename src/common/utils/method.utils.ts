@@ -1,4 +1,4 @@
-import { IErrorsProps } from '@/types/app-global.types';
+import { IErrorsProps } from '@/types/common-global.types';
 
 export function handleErrors(error: any): IErrorsProps {
   return {

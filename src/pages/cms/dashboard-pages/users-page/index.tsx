@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 export const UsersPage = () => {
   return (
     <div>
-      <Typography>San pham </Typography>
+      <Typography>Users page</Typography>
     </div>
   );
 };

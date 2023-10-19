@@ -1,6 +1,7 @@
+import { AcademicCapIcon } from '@heroicons/react/24/outline';
 import { Button as MUIButton } from '@mui/material';
 import { CartIcon } from '@/assets';
-import { Button, Container } from '@/components';
+import { Button, Container, Dropdown } from '@/components';
 import { useTheme } from '@/hooks/common-hook';
 import { ModalServices } from '@/services/modal-service';
 
@@ -53,6 +54,19 @@ export const HomePage = () => {
       <p className="font-bold text-black font-integralCF text-[40px]">
         One Life Graphic T-shirt
       </p>
+      <Dropdown
+        className="!w-[200px]"
+        containerClass="w-[100px]"
+        options={[
+          {
+            label: 'Your profile',
+            action: () => {},
+            icon: <AcademicCapIcon />,
+          },
+          { label: 'Sign out', action: () => {} },
+        ]}
+        label="Options"
+      />
     </Container>
   );
 };

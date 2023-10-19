@@ -25,7 +25,7 @@ export const Button = ({
     return {
       'rounded-contained': {
         className:
-          '!rounded-full px-4 py-2.5 text-sm font-semibold text-white shadow-sm !bg-black',
+          '!rounded-full px-4 py-2.5 text-sm font-semibold text-white shadow-sm',
         variant: 'contained',
       },
       'rounded-outlined': {

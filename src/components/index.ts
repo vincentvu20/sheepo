@@ -6,3 +6,4 @@ export * from './Footer';
 export * from './Header';
 export * from './Dropdown';
 export * from './Checkbox';
+export * from './Input';

@@ -1,7 +1,7 @@
 import { AcademicCapIcon } from '@heroicons/react/24/outline';
 import { Button as MUIButton } from '@mui/material';
 import { CartIcon } from '@/assets';
-import { Button, Container, Dropdown } from '@/components';
+import { Button, Collapse, Container, Dropdown } from '@/components';
 import { useTheme } from '@/hooks/common-hook';
 import { ModalServices } from '@/services/modal-service';
 
@@ -67,6 +67,8 @@ export const HomePage = () => {
         ]}
         label="Options"
       />
+
+      <Collapse />
     </Container>
   );
 };

@@ -13,7 +13,7 @@ type ModalsPortal = {
   show: (children: React.ReactNode) => number;
   dismiss: () => void;
 };
-export const _modal = createRef<ModalsPortal>();
+export const _modal = createRef<ModalsPortal>;
 
 const ModalPortalBase = forwardRef((_, ref) => {
   const [content, setContent] = useState<React.ReactNode>(EMPTY_JSX);
@@ -44,7 +44,8 @@ const ModalPortalBase = forwardRef((_, ref) => {
       <Dialog
         as="div"
         className="relative z-10"
-        onClose={() => setIsVisible(false)}>
+        onClose={() => setIsVisible(false)}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -52,7 +53,8 @@ const ModalPortalBase = forwardRef((_, ref) => {
           enterTo="opacity-100"
           leave="ease-in duration-200"
           leaveFrom="opacity-100"
-          leaveTo="opacity-0">
+          leaveTo="opacity-0"
+        >
           <div className="fixed inset-0 opacity-40 bg-gray-800 transition-opacity" />
         </Transition.Child>
 
@@ -65,7 +67,8 @@ const ModalPortalBase = forwardRef((_, ref) => {
               enterTo="opacity-100 translate-y-0 sm:scale-100"
               leave="ease-in duration-200"
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
               <Dialog.Panel className="relative transform overflow-hidden bg-white rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg p-6 min-w-[200px]">
                 {content}
               </Dialog.Panel>

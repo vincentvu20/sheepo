@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { AcademicCapIcon } from '@heroicons/react/24/outline';
 import { Button as MUIButton } from '@mui/material';
 import { CartIcon } from '@/assets';
-import { Button, Collapse, Container, Dropdown } from '@/components';
+import { Button, Collapse, Container, Dropdown, Textarea } from '@/components';
 import { useTheme } from '@/hooks/common-hook';
 import { ModalServices } from '@/services/modal-service';
 
 export const HomePage = () => {
+  const [value, setValue] = useState<string>('');
+
   const theme = useTheme();
   return (
     <Container>
@@ -29,7 +32,6 @@ export const HomePage = () => {
         }}>
         Test toast success
       </Button>
-
       <Button
         variant="rounded-outlined"
         className="w-[180px]"
@@ -40,15 +42,12 @@ export const HomePage = () => {
         }}>
         Test toast error
       </Button>
-
       <MUIButton variant="contained" className="w-[200px]">
         Test Button MUI
       </MUIButton>
-
       <MUIButton variant="contained" className="w-[200px]" color="info">
         Test Button MUI
       </MUIButton>
-
       <CartIcon color={theme.colors.skyBlue} />
       <p className="font-santoshi font-normal text-black60">Test font</p>
       <p className="font-bold text-black font-integralCF text-[40px]">
@@ -67,8 +66,14 @@ export const HomePage = () => {
         ]}
         label="Options"
       />
-
       <Collapse />
+      <Textarea
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        placeholder="Enter your text here..."
+        rows={5}
+        cols={20}
+      />
     </Container>
   );
 };

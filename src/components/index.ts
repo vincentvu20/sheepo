@@ -8,3 +8,4 @@ export * from './Dropdown';
 export * from './Checkbox';
 export * from './Input';
 export * from './Collapse';
+export * from './Textarea';

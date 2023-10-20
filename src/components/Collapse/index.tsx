@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Menu } from '@headlessui/react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-export const Collapse = ({ title, children }: any) => {
+interface ICollapse {
+  children: ReactNode;
+  title: string;
+}
+
+export const Collapse = ({ title, children }: ICollapse) => {
   const [show, setShow] = useState<boolean>(false);
   const handleShow = () => setShow(!show);
   return (

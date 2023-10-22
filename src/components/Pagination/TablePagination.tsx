@@ -21,7 +21,7 @@ const TablePagination = ({
   sx,
   ...others
 }: CustomTablePaginationProps) => {
-  const handleChange = (event: React.MouseEvent | null, page: number) => {
+  const handleChange = (_event: React.MouseEvent | null, page: number) => {
     onPageChange(page);
   };
 

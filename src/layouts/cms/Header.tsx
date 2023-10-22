@@ -58,15 +58,15 @@ function Header({ onLogout, onRedirectProfile, ...other }: any) {
             <Tooltip title="Open settings">
               <Box display="flex">
                 <div className="flex flex-col items-end justify-center">
-                  <Typography variant="h6">Super Admin</Typography>
-                  <Typography variant="body2">
+                  <Typography variant="body2">Super Admin</Typography>
+                  <Typography variant="subtitle1">
                     super_admin@sheepo.com
                   </Typography>
                 </div>
                 <IconButton
                   onClick={handleOpenUserMenu}
                   sx={{ p: 0, marginLeft: 2 }}>
-                  <UserCircleIcon height={48} width={48} />
+                  <UserCircleIcon height={60} width={60} />
                 </IconButton>
               </Box>
             </Tooltip>

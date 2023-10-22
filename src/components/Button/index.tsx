@@ -25,12 +25,12 @@ export const Button = ({
     return {
       'rounded-contained': {
         className:
-          '!rounded-full px-4 py-2.5 text-sm font-semibold text-white shadow-sm',
+          '!rounded-full px-4 !py-3 text-sm font-semibold text-white shadow-sm',
         variant: 'contained',
       },
       'rounded-outlined': {
         className:
-          '!rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50',
+          '!rounded-full bg-white px-4 !py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50',
         variant: 'outlined',
       },
     };

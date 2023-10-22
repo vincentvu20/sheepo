@@ -15,7 +15,7 @@ function showMessageSuccess({ message }: { message: string }) {
   toast(message, {
     position: 'top-right',
     type: 'success',
-    style: { marginTop: 50 },
+    style: { marginTop: 50, fontSize: 16 },
   } as any);
 }
 
@@ -23,7 +23,7 @@ function showMessageError({ message }: { message: string }) {
   toast(message, {
     position: 'top-right',
     type: 'error',
-    style: { marginTop: 50 },
+    style: { marginTop: 50, fontSize: 16 },
   } as any);
 }
 

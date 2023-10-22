@@ -1,7 +1,7 @@
 import { _modal } from './index';
 
 class ModalPortalServiceBase {
-  private _ref = _modal;
+  private _ref = _modal as any;
 
   show = (body: React.ReactNode) => {
     if (this._ref.current && typeof this._ref.current?.show === 'function') {

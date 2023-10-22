@@ -1,4 +1,4 @@
-import { createTheme, ThemeOptions } from '@mui/material';
+import { alpha, createTheme, ThemeOptions } from '@mui/material';
 import { colors } from './colors';
 import { IColorType } from './types';
 
@@ -15,6 +15,20 @@ export const theme = createTheme({
     },
     h2: {
       fontSize: 48,
+      fontWeight: 700,
+      fontFamily: 'Integral CF',
+      fontStyle: 'normal',
+      lineHeight: 'normal',
+    },
+    h3: {
+      fontSize: 24,
+      fontWeight: 700,
+      fontFamily: 'Integral CF',
+      fontStyle: 'normal',
+      lineHeight: 'normal',
+    },
+    h4: {
+      fontSize: 16,
       fontWeight: 700,
       fontFamily: 'Integral CF',
       fontStyle: 'normal',
@@ -58,6 +72,7 @@ export const theme = createTheme({
     button: {
       fontSize: 16,
       fontFamily: 'Satoshi',
+      fontWeight: 400,
     },
   },
   palette: {
@@ -99,6 +114,32 @@ export const theme = createTheme({
       contrastText: colors.white,
     },
   },
-  components: {},
+  components: {
+    MuiTypography: {
+      defaultProps: {
+        variant: 'subtitle1',
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          fontSize: 16,
+          padding: '12px 16px',
+          borderRadius: 100,
+          fontWeight: 400,
+          ':focus': {
+            borderWidth: 0,
+            // border: '2px solid red',
+          },
+        },
+        root: {
+          borderRadius: 100,
+          backgroundColor: '#F3F6F9',
+          borderColor: '#E0E3E7',
+          border: '1px solid',
+          position: 'relative',
+        },
+      },
+    },
+  },
 } as ThemeOptions & { colors: IColorType });
-

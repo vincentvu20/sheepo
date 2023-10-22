@@ -20,7 +20,7 @@ export const RangeSlider = ({
   sx,
   ...others
 }: RangeSliderProps) => {
-  const handleChange = (event: Event, newValue: number | number[]) => {
+  const handleChange = (_: Event, newValue: number | number[]) => {
     onChange(newValue as [number, number]);
   };
 

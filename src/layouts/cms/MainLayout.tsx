@@ -7,7 +7,6 @@ import {
   TagIcon,
   UsersIcon,
 } from '@heroicons/react/24/outline';
-import AdbIcon from '@mui/icons-material/Adb';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -103,22 +102,15 @@ export const MainLayout = () => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <AdbIcon sx={{ display: 'flex', mr: 1 }} color="primary" />
         <Typography
-          variant="h6"
+          variant="h2"
           noWrap
           component="a"
           href="/cms"
           sx={{
-            mr: 2,
-            display: 'flex',
-            fontFamily: 'monospace',
-            fontWeight: 700,
-            letterSpacing: '.3rem',
-            color: 'inherit',
-            textDecoration: 'none',
+            fontSize: 32,
           }}>
-          LOGO
+          SHOP.CO
         </Typography>
       </Toolbar>
       <Divider />
@@ -130,7 +122,10 @@ export const MainLayout = () => {
               onClick={handleRedirect(data.path, idx)}>
               <ListItemIcon>{data.icons}</ListItemIcon>
               <ListItemText
-                primaryTypographyProps={{ style: { fontWeight: 500 } }}
+                primaryTypographyProps={{
+                  style: { fontWeight: 500 },
+                  variant: 'body2',
+                }}
                 primary={data.label}
               />
               <ChevronRightIcon height={16} width={16} />

@@ -17,6 +17,7 @@ export const ColorPicker = ({
             width: '260px',
             p: '15px',
             display: 'flex',
+            flexWrap: 'wrap',
             alignItems: 'center',
             gap: '10px',
           }}>

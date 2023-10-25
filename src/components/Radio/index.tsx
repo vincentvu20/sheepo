@@ -11,7 +11,7 @@ type IRadioProps = {
   variant?: `${VariantRadio}`;
 } & Omit<RadioProps, 'variant'>;
 
-const RadioButtons = ({
+export const RadioButtons = ({
   value,
   variant = 'rounded-contained',
   className,
@@ -36,4 +36,3 @@ const RadioButtons = ({
     </RadioGroup>
   );
 };
-export default RadioButtons;

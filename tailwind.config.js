@@ -38,6 +38,7 @@ module.exports = {
         error: '#FF3333',
         errorLight: 'rgba(255, 51, 51, 0.10);',
         error10: 'rgba(255, 51, 51, 0.10)',
+        black20: 'rgba(0, 0, 0, 0.20)',
         black40: 'rgba(0, 0, 0, 0.4)',
         black60: 'rgba(0, 0, 0, 0.6)',
         warning: '#FFC633',

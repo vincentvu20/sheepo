@@ -1,9 +1,9 @@
-import { Typography } from '@mui/material';
+import { Breadcrumbs } from '@/components';
 
 export const ProductsPage = () => {
   return (
     <div>
-      <Typography>Products Page</Typography>
+      <Breadcrumbs />
     </div>
   );
 };

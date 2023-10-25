@@ -21,7 +21,7 @@ const Pagination = ({
   sx,
   ...others
 }: CustomPaginationProps) => {
-  const handleChange = (event: React.ChangeEvent<unknown>, page: number) => {
+  const handleChange = (_event: React.ChangeEvent<unknown>, page: number) => {
     onPageChange(page);
   };
 

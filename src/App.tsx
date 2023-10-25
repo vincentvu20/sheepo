@@ -1,5 +1,6 @@
 import { Toaster } from 'react-hot-toast';
 import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
 import './styles/app.css';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -17,7 +18,7 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={<></>} persistor={persistor}>
         <ThemeProvider theme={theme}>
-          <Routers />
+          <RouterProvider router={Routers} />
           <ModalPortal />
           <Toaster />
         </ThemeProvider>

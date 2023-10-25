@@ -4,13 +4,15 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-const DatePickerComponent = () => {
+export const DatePickerComponent = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer sx={{ border: 'none' }} components={['DatePicker']}>
-        <DatePicker sx={{ border: 'none' }} label="MM/DD/YYYY" />
+      <DemoContainer components={['DatePicker']}>
+        <DatePicker
+          sx={{ border: 'none', '& .MuiInputBase-root': { border: 'none' } }}
+          label="MM/DD/YYYY"
+        />
       </DemoContainer>
     </LocalizationProvider>
   );
 };
-export default DatePickerComponent;

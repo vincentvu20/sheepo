@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Box } from '@mui/material';
 
-const ColorPicker = ({
+export const ColorPicker = ({
   colorList,
   setBackgroundColor,
 }: {
@@ -60,5 +60,3 @@ const ColorPicker = ({
     </>
   );
 };
-
-export default ColorPicker;

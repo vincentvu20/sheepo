@@ -9,3 +9,6 @@ export * from './Checkbox';
 export * from './Input';
 export * from './Collapse';
 export * from './Select';
+export * from './ColorPicker';
+export * from './DatePicker';
+export * from './Radio';

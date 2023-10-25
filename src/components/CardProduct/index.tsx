@@ -19,8 +19,12 @@ export const CardProduct = ({
 }: CardProductProps) => {
   return (
     <div className="font-santoshi mx-auto">
-      <img src={image} alt="image-product" className="rounded-[20px]" />
-      <h3 className="mt-4 mb-2 text-xl font-bold font-santoshi text-black">
+      <img
+        src={image}
+        alt="image-product"
+        className="rounded-[20px] cursor-pointer"
+      />
+      <h3 className="mt-4 mb-2 text-xl font-bold font-santoshi cursor-pointer text-black">
         {name}
       </h3>
       <RatingView value={star} />

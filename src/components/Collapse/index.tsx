@@ -1,33 +1,34 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
+import { Menu } from '@headlessui/react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import clsx from 'classnames';
 
-export const Collapse = () => {
+interface ICollapse {
+  children: ReactNode;
+  title: string;
+  className?: string;
+}
+
+export const Collapse = ({ className, title, children }: ICollapse) => {
   const [show, setShow] = useState<boolean>(false);
   const handleShow = () => setShow(!show);
-  const Items = () => {
-    return (
-      <li className="flex items-center justify-between my-2">
-        <KeyboardArrowRightIcon />
-      </li>
-    );
-  };
   return (
-    <div className="border w-28 mt-2 p-2">
-      <button
-        className="flex items-center justify-between w-full  "
+    <Menu>
+      <div
+        className={clsx(
+          'flex items-center justify-between w-full border-b p-1',
+          className,
+        )}
         onClick={handleShow}>
-        Collapse {!show ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
-      </button>
-      {show === true && (
-        <ul>
-          <Items />
-          <Items />
-          <Items />
-          <Items />
-        </ul>
-      )}
-    </div>
+        {title}
+        {!show ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+      </div>
+      <div
+        className="collapse-body py-2"
+        style={{ display: show ? 'block' : 'none' }}>
+        {children}
+      </div>
+    </Menu>
   );
 };

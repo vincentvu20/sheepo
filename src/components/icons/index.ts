@@ -13,3 +13,5 @@ export * from './VisaIcon';
 export * from './MasterCardIcon';
 export * from './GooglePayIcon';
 export * from './ApplePayIcon';
+export * from './MinusIcon';
+export * from './PlusIcon';

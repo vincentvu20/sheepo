@@ -15,7 +15,10 @@ import {
   ProductsPage,
   UsersPage,
 } from '@/pages/cms';
-import { HomePage as HomePageWeb } from '@/pages/customer';
+import {
+  HomePage as HomePageWeb,
+  ProductDetailPage as ProductDetailPageWeb,
+} from '@/pages/customer';
 
 export const Routers = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +35,16 @@ export const Routers = createBrowserRouter(
                 name: 'Home',
               };
             },
+          }}
+        />
+        <Route
+          path="products/:productId"
+          element={<ProductDetailPageWeb />}
+          handle={{
+            crumb: () => ({
+              href: 'products',
+              name: 'Products',
+            }),
           }}
         />
       </Route>

@@ -10,3 +10,6 @@ export * from './Input';
 export * from './Collapse';
 export * from './Select';
 export * from './Breadcrumbs';
+export * from './TitleSection';
+export * from './Tab';
+export * from './CardProduct';

@@ -1,18 +1,14 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import EastIcon from '@mui/icons-material/East';
 import SellIcon from '@mui/icons-material/Sell';
-import { Button, Input } from '@/components';
-import { useAppDispatch, useAppSelector, useTheme } from '@/hooks/common-hook';
+import { Breadcrumbs, Button, Input } from '@/components';
+import { useAppDispatch, useAppSelector } from '@/hooks/common-hook';
 import { setCart } from '@/redux/slices/cart-slice';
 import Item from './components/Item';
 
 export default function CartPage() {
-  const navigate = useNavigate();
   const { cart } = useAppSelector(store => store);
   const dispatch = useAppDispatch();
-  const { colors } = useTheme();
 
   useEffect(() => {
     dispatch(
@@ -56,54 +52,37 @@ export default function CartPage() {
   const total: number = subtotal - discount + 15;
 
   return (
-    <div className="max-w-[1440px] mx-auto font-santoshi">
-      {/*  sm:p-4 lg:p-3 */}
-      <h3 className="text-xl font-normal not-italic mb-5">
-        {/* sm:mb-2 */}
-        <span
-          className="text-black60 cursor-pointer"
-          onClick={() => navigate('/')}>
-          Home
-        </span>
-        <ChevronRightIcon className="text-black60" />
-        Cart
-      </h3>
-      <h1 className="text-4xl font-bold font-integralCF mb-6">
-        {/*  sm:mb-3 sm:text-3xl lg:mb-3 lg:text-3xl */}
+    <div className="max-w-[1440px] mx-auto font-santoshi p-2 md:p-3">
+      <Breadcrumbs />
+      <h1 className="text-3xl font-bold font-integralCF mb-3 xl:text-4xl xl:mb-6">
         Your Cart
       </h1>
-      <div className="flex gap-5">
-        <div className="flex flex-col items-start w-full h-full px-6 rounded-3xl border">
-          {/*  sm:px-4 */}
+      <div className="flex flex-col gap-5 xl:flex-row xl:p-0">
+        <div className="flex flex-col items-start w-full h-full px-3 rounded-3xl border xl:px-5">
           {cart.items.map(item => (
             <Item data={item} />
           ))}
         </div>
-        <div className="flex flex-col w-full h-full px-6 py-5 gap-6 rounded-3xl border">
-          {/* sm:gap-4  sm:px-5*/}
-          <h1 className="text-2xl font-medium not-italic ">
-            {/*sm:text-xl*/}
+        <div className="flex flex-col w-full h-full px-5 py-5 gap-4 rounded-3xl border xl:px-6 xl:gap-6">
+          <h1 className="text-xl font-medium not-italic xl:text-2xl">
             Order Summary
           </h1>
-          <div className="flex flex-col gap-5 ">
-            {/* sm:gap-4 */}
-            <h3 className="flex justify-between items-center text-xl text-black60 font-normal ">
-              {/*sm:text-xl*/}
-              Subtotal <span className="text-[black]">${subtotal}</span>
+          <div className="flex flex-col gap-4 xl:gap-5">
+            <h3 className="flex justify-between items-center text-lg text-black60 font-normal xl:text-xl">
+              Subtotal
+              <span className="font-bold text-[black]">${subtotal}</span>
             </h3>
-            <h3 className="flex justify-between items-center text-xl text-black60 font-normal ">
-              {/*sm:text-xl*/}
-              Discount (-20%) <span className="text-error">-${discount}</span>
+            <h3 className="flex justify-between items-center text-lg text-black60 font-normal xl:text-xl">
+              Discount (-20%)
+              <span className="font-bold text-error">-${discount}</span>
             </h3>
-            <h3 className="flex justify-between items-center text-xl text-black60 font-normal ">
-              {/*sm:text-xl*/}
-              Delivary Fee <span className="text-black">$15</span>
+            <h3 className="flex justify-between items-center text-lg text-black60 font-normal xl:text-xl">
+              Delivary Fee <span className="font-bold text-black">$15</span>
             </h3>
             <hr />
             <h2 className="flex justify-between items-center text-xl font-normal ">
-              {/*sm:text-xl*/}
               Total
-              <span className="font-medium text-2xl">
+              <span className="font-bold text-2xl">
                 ${subtotal === 0 ? 0 : total}
               </span>
             </h2>
@@ -123,7 +102,7 @@ export default function CartPage() {
               Apply
             </button>
           </div>
-          <Button className="!font-santoshi !py-3 !text-5 h-[60px]">
+          <Button className="!font-santoshi !mb-[30px] !py-3 !text-5 h-[60px]">
             Go to checkout &nbsp;
             <EastIcon />
           </Button>

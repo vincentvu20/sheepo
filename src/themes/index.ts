@@ -1,4 +1,4 @@
-import { alpha, createTheme, ThemeOptions } from '@mui/material';
+import { createTheme, ThemeOptions } from '@mui/material';
 import { colors } from './colors';
 import { IColorType } from './types';
 

@@ -20,7 +20,7 @@ module.exports = {
       },
       screens: {
         '2xsmall': '320px',
-        xsmall: '620px',
+        xsmall: '600px',
         xxsmall: '960px',
         small: '1024px',
         medium: '1280px',

@@ -20,6 +20,7 @@ import {
   HomePage as HomePageWeb,
   ProductDetailPage as ProductDetailPageWeb,
 } from '@/pages/customer';
+import { LoginPageCTM } from '@/pages/customer/login-page';
 
 export const Routers = createBrowserRouter(
   createRoutesFromElements(
@@ -47,6 +48,19 @@ export const Routers = createBrowserRouter(
               name: 'Products',
             }),
           }}
+        />
+        <Route
+          index
+          element={<LoginPageCTM />}
+          handle={{
+            crumb: () => {
+              return {
+                href: 'login',
+                name: 'Login',
+              };
+            },
+          }}
+          path="login/:login"
         />
       </Route>
 

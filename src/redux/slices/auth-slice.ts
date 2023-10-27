@@ -1,7 +1,42 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { ILogin, UserType } from '@/models/authentication.model';
+import { NetworkService } from '@/services/network-service';
 import { IAuthState } from './types';
 
 const PREFIX_AUTH_SLICE = '_AUTH_';
+export const loginCms = createAsyncThunk(
+  `${PREFIX_AUTH_SLICE}LOGIN_ADMIN`,
+  async (body: ILogin, { rejectWithValue }) => {
+    try {
+      const { data } = await NetworkService.post('LOGIN_CMS', body);
+      if (data && data?.accessToken) {
+        return {
+          ...data,
+          type: UserType.Admin,
+        };
+      }
+    } catch (error: any) {
+      throw rejectWithValue(error);
+    }
+  },
+);
+
+export const login = createAsyncThunk(
+  `${PREFIX_AUTH_SLICE}LOGIN`,
+  async (body: ILogin, { rejectWithValue }) => {
+    try {
+      const { data } = await NetworkService.post('LOGIN', body);
+      if (data && data?.accessToken) {
+        return {
+          ...data,
+          type: UserType.Buyer,
+        };
+      }
+    } catch (error: any) {
+      throw rejectWithValue(error);
+    }
+  },
+);
 
 const initialState = {
   accessToken: undefined,
@@ -15,14 +50,28 @@ const authSlice = createSlice({
     logout(state: IAuthState) {
       state.accessToken = undefined;
     },
-    setIsLoggedCms(state: IAuthState, payload: PayloadAction<string>) {
-      state.accessTokenCms = payload.payload;
-    },
     logoutCms(state: IAuthState) {
       state.accessTokenCms = undefined;
     },
+    //to do, add getProfile
+  },
+  extraReducers: builder => {
+    builder.addCase(loginCms.fulfilled, (state, action) => {
+      if (action?.payload && action?.payload?.accessToken) {
+        if (action.payload.type === UserType.Admin) {
+          state.accessTokenCms = action.payload.accessToken;
+        }
+      }
+    });
+    builder.addCase(login.fulfilled, (state, action) => {
+      if (action?.payload && action?.payload?.accessToken) {
+        if (action.payload.type === UserType.Buyer) {
+          state.accessToken = action.payload.accessToken;
+        }
+      }
+    });
   },
 });
 
-export const { logout, setIsLoggedCms, logoutCms } = authSlice.actions;
+export const { logout, logoutCms } = authSlice.actions;
 export const authReducer = authSlice.reducer;

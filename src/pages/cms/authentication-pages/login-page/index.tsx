@@ -1,17 +1,41 @@
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { LockClosedIcon, UserIcon } from '@heroicons/react/24/outline';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Card, Typography } from '@mui/material';
+import { schemaLoginCms } from '@/common/utils/schema';
 import { Button, Input } from '@/components';
 import { useAppDispatch, useTheme } from '@/hooks/common-hook';
-import { setIsLoggedCms } from '@/redux/slices';
+import { loginCms } from '@/redux/slices';
 import { ModalServices } from '@/services/modal-service';
+import { IErrorsProps } from '@/types/common-global.types';
 
 export const LoginPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    shouldUseNativeValidation: true,
+    resolver: yupResolver(schemaLoginCms),
+  });
+
   const dispatch = useAppDispatch();
   const { colors } = useTheme();
-  const handleLogin = () => {
-    dispatch(setIsLoggedCms('true'));
-    ModalServices.showMessageSuccess({ message: 'Login successfully' });
-  };
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleLogin = handleSubmit(async data => {
+    try {
+      setIsLoading(true);
+      await dispatch(loginCms(data)).unwrap();
+      ModalServices.showMessageSuccess({ message: 'Login successfully' });
+    } catch (error) {
+      const err = error as IErrorsProps;
+      ModalServices.showMessageError({ message: err.message });
+    } finally {
+      setIsLoading(false);
+    }
+  });
 
   return (
     <div className="h-screen w-screen">
@@ -33,6 +57,9 @@ export const LoginPage = () => {
               label="User name"
               required
               renderLeadingIcon={<UserIcon color={colors.black} />}
+              register={register}
+              name="email"
+              errorMessage={errors?.email?.message}
             />
             <Input
               placeholder="Password"
@@ -40,9 +67,12 @@ export const LoginPage = () => {
               type="password"
               required
               renderLeadingIcon={<LockClosedIcon color={colors.black} />}
+              register={register}
+              name="password"
+              errorMessage={errors?.password?.message}
             />
           </div>
-          <Button onClick={handleLogin} className="w-full">
+          <Button disabled={isLoading} onClick={handleLogin} className="w-full">
             Login
           </Button>
         </Card>

@@ -1,3 +1,4 @@
 export enum API_PATH {
-  LOGIN = '/login',
+  LOGIN_CMS = '/auth/login/admin',
+  LOGIN = '/auth/login',
 }

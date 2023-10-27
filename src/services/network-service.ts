@@ -15,7 +15,7 @@ const instance = axios.create({
     'cache-control': 'no-cache',
     Accept: '*/*',
   },
-  baseURL: process.env.API_BASE_URL,
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
 instance.interceptors.request.use(
@@ -40,7 +40,7 @@ instance.interceptors.response.use(
   },
   function (error) {
     const err = handleErrors(error);
-    if (error?.response?.data?.errors?.[0]?.statusCode === UNAUTHORIZED_CODE) {
+    if (error?.response?.data?.statusCode === UNAUTHORIZED_CODE) {
       const token = store.getState()?.auth?.accessToken;
       if (token) {
         store.dispatch(logout() as any);

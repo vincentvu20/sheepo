@@ -55,8 +55,8 @@ export const Routers = createBrowserRouter(
           handle={{
             crumb: () => {
               return {
-                href: '/',
-                name: 'cart',
+                href: 'cart',
+                name: 'Cart',
               };
             },
           }}

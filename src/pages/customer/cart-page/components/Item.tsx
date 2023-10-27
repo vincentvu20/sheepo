@@ -37,37 +37,33 @@ const Item = (props: IItemProps) => {
   };
 
   return (
-    <div className=" flex w-full gap-[16px] py-[24px] border-b">
-      {/*  sm:gap-[14px]   sm:py-[18px]*/}
-      <img src={shirt_1} alt="###" className="rounded-lg" />
-      {/* sm:w-[99px] */}
+    <div className=" flex w-full gap-4 py-5 border-b xl:gap-5 xl:py-6">
+      <img src={shirt_1} alt="###" className="rounded-lg w-[99px]" />
       <div className="w-full">
-        <h2 className="flex justify-between items-center text-[20px] font-medium not-italic">
-          {/*  sm:text-[16px] */}
+        <h2 className="flex justify-between items-center text-lg font-medium not-italic xl:text-2xl">
           Gradient Graphic T-shirt
           <DeleteIcon
             className="cursor-pointer text-error"
             onClick={() => handleDeleteItem(data.id)}
           />
         </h2>
-        <h4 className="text-[14px]">
+        <h4 className="text-sm">
           Size :&nbsp;
           <span className="text-black60">{data.size}</span>
         </h4>
-        <h4 className=" text-[14px]">
+        <h4 className=" text-sm">
           Color :&nbsp;
           <span className="text-black60">{data.color}</span>
         </h4>
         <div className="flex justify-between items-center">
-          <h2 className="text-[24px] font-medium not-italic">
-            {/* sm:text-[20px] */}${data.price * data.amount}
+          <h2 className="text-[20px] font-medium not-italic xl:text-2xl">
+            ${data.price * data.amount}
           </h2>
-          <div className=" flex gap-[20px] bg-snowFlake rounded-[62px] py-[12px] px-[20px]">
-            {/*  sm:py-[5px] sm:px-[15px] sm:gap-[10px] */}
+          <div className=" flex gap-3 bg-snowFlake rounded-[62px] py-1 px-4 xl:gap-4 xl:py-3 xl:px-5">
             <button onClick={() => handleCount(data.id, 'down')}>
               <RemoveIcon />
             </button>
-            <h4 className="text-[18px]">{data.amount}</h4>
+            <h4 className="text-lg xl:text-lg">{data.amount}</h4>
             <button onClick={() => handleCount(data.id, 'up')}>
               <AddIcon />
             </button>

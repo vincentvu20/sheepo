@@ -131,6 +131,9 @@ export const theme = createTheme({
             borderWidth: 0,
             // border: '2px solid red',
           },
+          '-internal-autofill-selecte': {
+            borderWidth: 0,
+          },
         },
         root: {
           borderRadius: 100,

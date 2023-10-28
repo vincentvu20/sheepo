@@ -9,6 +9,7 @@ import { MainLayout as CMSMainLayout } from '@/layouts/cms/MainLayout';
 import { RedirectLayout } from '@/layouts/cms/RedirectLayout';
 import { MainLayout } from '@/layouts/customer/MainLayout';
 import {
+  AttributesPage,
   BookingsPage,
   CategoriesPage,
   LoginPage,
@@ -56,6 +57,16 @@ export const Routers = createBrowserRouter(
               crumb: () => ({
                 href: 'users',
                 name: 'Users',
+              }),
+            }}
+          />
+          <Route
+            path="attributes"
+            element={<AttributesPage />}
+            handle={{
+              crumb: () => ({
+                href: 'attributes',
+                name: 'Attributes',
               }),
             }}
           />

@@ -4,6 +4,7 @@ import {
   ChevronRightIcon,
   ShoppingBagIcon,
   ShoppingCartIcon,
+  SwatchIcon,
   TagIcon,
   UsersIcon,
 } from '@heroicons/react/24/outline';
@@ -36,6 +37,11 @@ const DrawerData = [
     label: 'Categories',
     icons: <TagIcon height={24} width={24} color="black" />,
     path: ROUTES_CMS.CATEGORIES,
+  },
+  {
+    label: 'Attributes',
+    icons: <SwatchIcon height={24} width={24} color="black" />,
+    path: ROUTES_CMS.ATTRIBUTES,
   },
   {
     label: 'Products',
@@ -128,7 +134,7 @@ export const MainLayout = () => {
                 }}
                 primary={data.label}
               />
-              <ChevronRightIcon height={16} width={16} />
+              {/* <ChevronRightIcon height={16} width={16} /> */}
             </ListItemButton>
           </ListItem>
         ))}

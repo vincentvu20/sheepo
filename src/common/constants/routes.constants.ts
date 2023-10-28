@@ -5,4 +5,5 @@ export enum ROUTES_CMS {
   BOOKINGS = '/cms/bookings',
   CATEGORIES = '/cms/categories',
   PRODUCTS = '/cms/products',
+  ATTRIBUTES = '/cms/attributes',
 }

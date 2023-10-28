@@ -8,7 +8,7 @@
   --tw-ring-offset-color: #fff;
   --tw-ring-color: rgba(59, 130, 246, 0.5);
   --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000
+  --tw-ring-shadow: 0 0 #0000;
 }
 
 @layer base {
@@ -91,7 +91,7 @@
   select:-webkit-autofill,
   select:-webkit-autofill:hover,
   select:-webkit-autofill:focus {
-    border: 1px solid #212121;
+    border: 0px solid #212121;
     -webkit-text-fill-color: #212121;
     -webkit-box-shadow: 0 0 0px 1000px #fff inset;
     transition: background-color 5000s ease-in-out 0s;

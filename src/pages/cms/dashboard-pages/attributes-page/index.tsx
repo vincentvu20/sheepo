@@ -18,13 +18,12 @@ export const AttributesPage = () => {
 
   const onDelete = (id: string) => {
     return () => {
-      ModalServices.showMessageError({ message: 'Coming soon' });
-      // ModalServices.showConfirmModal({
-      //   message: 'Are you sure?',
-      //   title: 'Are you sure delete this attribute?',
-      //   onConfirm: () => {},
-      //   onCancel: () => {},
-      // });
+      ModalServices.showConfirmModal({
+        title: 'Are you sure?',
+        message: 'Are you sure delete this attribute?',
+        onConfirm: () => {},
+        onCancel: () => {},
+      });
     };
   };
 
@@ -116,7 +115,17 @@ export const AttributesPage = () => {
       <CmsForm
         title="Attribute Page"
         onCreateNew={() => setOpenCreateDrawer(true)}>
-        <Table rows={rows} columns={columns} />
+        <Table
+          rows={rows}
+          columns={columns}
+          isShowPagination
+          paginationProps={{
+            page: 0,
+            count: 100,
+            rowsPerPage: 25,
+            onPageChange: () => {},
+          }}
+        />
       </CmsForm>
       <React.Fragment key="right">
         <Drawer

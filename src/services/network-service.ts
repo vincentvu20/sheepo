@@ -19,9 +19,14 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
-    const token = store.getState()?.auth?.accessToken;
+  function (config: any) {
+    const isCms = config.isCms;
+    let token;
+    if (isCms) {
+      token = store.getState()?.auth?.accessTokenCms;
+    } else {
+      token = store.getState()?.auth?.accessToken;
+    }
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

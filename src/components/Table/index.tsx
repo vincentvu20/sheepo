@@ -14,12 +14,13 @@ import TablePagination, {
   CustomTablePaginationProps,
 } from '../Pagination/TablePagination';
 
-interface Column extends TableCellProps {
+export interface Column extends TableCellProps {
   id: string;
   label: string;
-  minWidth?: number;
+  minWidth?: number | string;
+  width?: number | string;
   format?: (value: number) => string | React.ReactElement;
-  render?: (value: string[]) => React.ReactElement;
+  render?: (value: string[]) => React.ReactNode;
 }
 
 export interface TableProps extends TableOwnProps {
@@ -69,9 +70,10 @@ export const Table = ({
               key={column.id}
               align={column.align}
               sx={cellSx}
-              style={
-                column?.minWidth ? { minWidth: column.minWidth } : undefined
-              }>
+              style={{
+                ...(column.width ? { width: column.width } : {}),
+                ...(column.minWidth ? { minWidth: column.minWidth } : {}),
+              }}>
               {column.label}
             </TableCell>
           ))}
@@ -92,7 +94,7 @@ export const Table = ({
                     {column?.format
                       ? column.format(value)
                       : column?.render
-                      ? column.render(value)
+                      ? column.render(row)
                       : value}
                   </TableCell>
                 );

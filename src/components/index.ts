@@ -10,3 +10,5 @@ export * from './Input';
 export * from './Collapse';
 export * from './Select';
 export * from './Breadcrumbs';
+export * from './Forms';
+export * from './Table';

@@ -22,7 +22,7 @@ export const Input = ({
   sx,
   type,
   renderLeadingIcon,
-
+  disableErrorMessage = false,
   ...props
 }: InputBaseProps & {
   register?: UseFormRegister<any>;
@@ -30,6 +30,7 @@ export const Input = ({
   contentContainerStyle?: string;
   errorMessage?: string;
   renderLeadingIcon?: React.ReactNode;
+  disableErrorMessage?: boolean;
 }) => {
   const { colors } = useTheme();
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -85,7 +86,9 @@ export const Input = ({
           <></>
         )}
       </div>
-      {errorMessage ? (
+      {disableErrorMessage ? (
+        <></>
+      ) : errorMessage ? (
         <Typography sx={{ color: colors.error }}>{errorMessage}</Typography>
       ) : (
         <div className="h-[22px]"></div>

@@ -9,10 +9,10 @@ export const BannerSection = () => {
       <Container>
         <div className="lg:flex justify-center items-center">
           <div>
-            <h1 className="text-black font-bold text-[64px] font-integralCF max-w-[577px] leading-[64px]">
+            <h1 className="text-black font-bold  text-3xl sm:mt-0 mt-10 sm:text-[64px] font-integralCF max-w-[577px] sm:leading-[64px] leading-8">
               FIND CLOTHES THAT MATCHES YOUR STYLE
             </h1>
-            <p className="max-w-[545px] font-normal font-santoshi text-black60 leading-[22px] mt-8">
+            <p className="max-w-[545px] font-normal font-santoshi text-black60 leading-[22px] mt-5 sm:mt-8">
               Browse through our diverse range of meticulously crafted garments,
               designed to bring out your individuality and cater to your sense
               of style.
@@ -24,7 +24,7 @@ export const BannerSection = () => {
                 Shop Now
               </Button>
             </div>
-            <div className="justify-center flex gap-4 leading-[74px] mt-8">
+            <div className="justify-center flex flex-wrap gap-4 leading-[74px] mt-8">
               {LIST_POINT.map((item, i) => {
                 if (item.point == '0') {
                   return (

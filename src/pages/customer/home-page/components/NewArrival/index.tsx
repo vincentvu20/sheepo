@@ -11,7 +11,8 @@ export const NewArrivalSection = () => {
         name="NEW ARRIVALS"
         className="mt-[72px] mb-[55px] flex justify-center items-center"
       />
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid sm:grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {/* <div className="gap-5 card-product overflow-hidden  sm:overflow-visible flex flex-row"> */}
         {LIST_CARD_PRODUCT.map((item, i) => (
           <CardProduct key={i} {...item} />
         ))}

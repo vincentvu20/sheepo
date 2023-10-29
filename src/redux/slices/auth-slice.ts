@@ -8,7 +8,9 @@ export const loginCms = createAsyncThunk(
   `${PREFIX_AUTH_SLICE}LOGIN_ADMIN`,
   async (body: ILogin, { rejectWithValue }) => {
     try {
-      const { data } = await NetworkService.post('LOGIN_CMS', body);
+      const { data } = await NetworkService.post('LOGIN_CMS', body, {
+        isCms: true,
+      });
       if (data && data?.accessToken) {
         return {
           ...data,

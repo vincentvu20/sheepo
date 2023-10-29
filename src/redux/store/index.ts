@@ -6,17 +6,19 @@ import {
 } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { authReducer } from '../slices';
+import { authReducer, modalReducer } from '../slices';
 
 const middleware = [] as any[];
 
 const allReducer = combineReducers({
+  modal: modalReducer,
   auth: authReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage: storage,
+  whitelist: ['auth'],
   // blacklist: [],
 };
 

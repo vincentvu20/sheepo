@@ -1,14 +1,19 @@
 import toast from 'react-hot-toast';
 import { ConfirmModal } from '@/components';
 import { IConfirmModalProps } from '@/models/modal.model';
-import { ModalPortalService } from '@/tools/modal-portal/services';
+import { clearContent, dismissModal, showModal } from '@/redux/slices';
+import { store } from '@/redux/store';
 
 function hideModal() {
-  ModalPortalService.dismiss();
+  store.dispatch(dismissModal());
+  setTimeout(() => {
+    store.dispatch(clearContent());
+  }, 0);
 }
 
 function showConfirmModal(props: IConfirmModalProps) {
-  ModalPortalService.show?.(<ConfirmModal {...props} />);
+  store.dispatch(showModal(<ConfirmModal {...props} />));
+  // ModalPortalService.show?.(<ConfirmModal {...props} />);
 }
 
 function showMessageSuccess({ message }: { message: string }) {

@@ -5,4 +5,5 @@ export interface ICategoryInitState {
   categories?: ICategory[];
   category?: ICategory;
   message?: IMessageResponse;
+  totalItem?: number;
 }

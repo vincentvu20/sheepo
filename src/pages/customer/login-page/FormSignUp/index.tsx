@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SignupSchema } from '@/common/utils/schema';
+import { LoginSchema } from '@/common/utils/schema';
 import { Button, Input } from '@/components';
 import { ModalServices } from '@/services/modal-service';
 
@@ -9,9 +9,9 @@ const FormSignUp = (props: any) => {
   const {
     register,
     handleSubmit,
-    formState: { isDirty, isValid },
+    formState: { errors, isDirty, isValid },
   } = useForm({
-    resolver: yupResolver(SignupSchema),
+    resolver: yupResolver(LoginSchema),
   });
   const onSubmit = handleSubmit(() => {
     if (!!isDirty && !!isValid) {
@@ -32,35 +32,39 @@ const FormSignUp = (props: any) => {
       </h1>
       <form onSubmit={onSubmit} className="flex flex-col gap-4 ">
         <Input
-          errorMessage="this field is required"
+          errorMessage={errors?.email?.message}
+          required
           label="Email"
           type="email"
           placeholder="Your email..."
-          {...{ register }}
+          register={register}
           name="email"
         />
         <Input
-          errorMessage="this field is required"
+          errorMessage={errors?.name?.message}
+          required
           label="name"
           type="text"
           placeholder="Your name..."
-          {...{ register }}
+          register={register}
           name="name"
         />
         <Input
-          errorMessage="this field is required"
+          errorMessage={errors?.phone?.message}
+          required
           label="phone"
           type="text"
           placeholder="Your phone..."
-          {...{ register }}
+          register={register}
           name="phone"
         />
         <Input
-          errorMessage="this field is required"
+          errorMessage={errors?.password?.message}
+          required
           label="password"
           type="password"
           placeholder="Your password..."
-          {...{ register }}
+          register={register}
           name="password"
         />
         <Button type="submit" className="!font-santoshi !py-3 !text-lg !mt-3">

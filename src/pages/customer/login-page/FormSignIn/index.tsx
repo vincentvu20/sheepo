@@ -1,8 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { LockClosedIcon, UserIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import PersonIcon from '@mui/icons-material/Person';
 import { FacebookIcon, GoogleIcon } from '@/assets';
 import { LoginSchema } from '@/common/utils/schema';
 import { Button, Input } from '@/components';
@@ -36,22 +35,24 @@ const SignIn = (props: any) => {
       </h2>
       <form onSubmit={onSubmit} className="flex flex-col">
         <Input
+          required
           label="Email"
           type="text"
           placeholder="Your email..."
           register={register}
           name="email"
           errorMessage={errors?.email?.message}
-          renderLeadingIcon={<PersonIcon />}
+          renderLeadingIcon={<UserIcon />}
         />
         <Input
+          required
           label="Password"
           type="password"
           placeholder="Your password..."
           register={register}
           name="password"
           errorMessage={errors?.password?.message}
-          renderLeadingIcon={<LockOpenIcon />}
+          renderLeadingIcon={<LockClosedIcon />}
         />
         <Button type="submit" className="!font-santoshi !py-3 !mt-3 !text-lg">
           Login

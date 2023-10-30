@@ -3,7 +3,7 @@ import background from '@/assets/images/background-auth.png';
 import FormSignIn from './FormSignIn';
 import FormSignUp from './FormSignUp';
 
-export const LoginPageCTM = () => {
+export const LoginForm = () => {
   const [show, setShow] = useState<boolean>(false);
 
   return (

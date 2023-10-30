@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import PersonIcon from '@mui/icons-material/Person';
 import { FacebookIcon, GoogleIcon } from '@/assets';
-import { SignupSchema } from '@/common/utils/schema';
+import { LoginSchema } from '@/common/utils/schema';
 import { Button, Input } from '@/components';
 import { ModalServices } from '@/services/modal-service';
 
@@ -12,9 +14,9 @@ const SignIn = (props: any) => {
   const {
     register,
     handleSubmit,
-    formState: { isDirty, isValid },
+    formState: { errors, isDirty, isValid },
   } = useForm({
-    resolver: yupResolver(SignupSchema),
+    resolver: yupResolver(LoginSchema),
   });
   const onSubmit = handleSubmit(() => {
     if (!!isDirty && !!isValid) {
@@ -34,20 +36,22 @@ const SignIn = (props: any) => {
       </h2>
       <form onSubmit={onSubmit} className="flex flex-col">
         <Input
-          errorMessage="this field is required"
           label="Email"
           type="text"
           placeholder="Your email..."
-          {...{ register }}
+          register={register}
           name="email"
+          errorMessage={errors?.email?.message}
+          renderLeadingIcon={<PersonIcon />}
         />
         <Input
-          errorMessage="this field is required"
           label="Password"
           type="password"
           placeholder="Your password..."
-          {...{ register }}
+          register={register}
           name="password"
+          errorMessage={errors?.password?.message}
+          renderLeadingIcon={<LockOpenIcon />}
         />
         <Button type="submit" className="!font-santoshi !py-3 !mt-3 !text-lg">
           Login

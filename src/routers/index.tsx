@@ -20,7 +20,7 @@ import {
   HomePage as HomePageWeb,
   ProductDetailPage as ProductDetailPageWeb,
 } from '@/pages/customer';
-import { LoginPageCTM } from '@/pages/customer/login-page';
+import { LoginForm } from '@/pages/customer/login-page';
 
 export const Routers = createBrowserRouter(
   createRoutesFromElements(
@@ -51,7 +51,7 @@ export const Routers = createBrowserRouter(
         />
         <Route
           index
-          element={<LoginPageCTM />}
+          element={<LoginForm />}
           handle={{
             crumb: () => {
               return {

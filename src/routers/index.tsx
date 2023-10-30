@@ -20,6 +20,7 @@ import {
   HomePage as HomePageWeb,
   ProductDetailPage as ProductDetailPageWeb,
 } from '@/pages/customer';
+import CartPage from '@/pages/customer/cart-page';
 
 export const Routers = createBrowserRouter(
   createRoutesFromElements(
@@ -47,6 +48,19 @@ export const Routers = createBrowserRouter(
               name: 'Products',
             }),
           }}
+        />
+        <Route
+          index
+          element={<CartPage />}
+          handle={{
+            crumb: () => {
+              return {
+                href: '/',
+                name: 'cart',
+              };
+            },
+          }}
+          path="/cart"
         />
       </Route>
 

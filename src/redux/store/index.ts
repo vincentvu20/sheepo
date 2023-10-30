@@ -9,6 +9,7 @@ import storage from 'redux-persist/lib/storage';
 import {
   attributeReducer,
   authReducer,
+  cartReducer,
   categoryReducer,
   modalReducer,
 } from '../slices';
@@ -20,13 +21,14 @@ const allReducer = combineReducers({
   auth: authReducer,
   category: categoryReducer,
   attribute: attributeReducer,
+  cart: cartReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage: storage,
   whitelist: ['auth'],
-  // blacklist: [],
+  blacklist: ['cart'],
 };
 
 const persistedReducer = persistReducer(persistConfig, allReducer);

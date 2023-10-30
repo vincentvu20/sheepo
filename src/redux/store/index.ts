@@ -6,7 +6,12 @@ import {
 } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { authReducer, categoryReducer, modalReducer } from '../slices';
+import {
+  authReducer,
+  categoryReducer,
+  modalReducer,
+  cartReducer,
+} from '../slices';
 
 const middleware = [] as any[];
 
@@ -14,13 +19,14 @@ const allReducer = combineReducers({
   modal: modalReducer,
   auth: authReducer,
   category: categoryReducer,
+  cart: cartReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage: storage,
   whitelist: ['auth'],
-  // blacklist: [],
+  blacklist: ['cart'],
 };
 
 const persistedReducer = persistReducer(persistConfig, allReducer);

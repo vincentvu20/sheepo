@@ -1,6 +1,5 @@
-import { Input } from '@mui/material';
 import { Button as MUIButton } from '@mui/material';
-import { Container } from '@/components';
+import { Container, Input } from '@/components';
 import {
   ApplePayIcon,
   FacebookIcon,
@@ -8,6 +7,7 @@ import {
   GooglePayIcon,
   InstagramIcon,
   MasterCardIcon,
+  MessageIcon,
   PaypalIcon,
   TwitterIcon,
   VisaIcon,
@@ -23,7 +23,11 @@ export const Footer = () => {
             STAY UPTO DATE ABOUT OUR LATEST OFFERS
           </h1>
           <div className="">
-            <Input className="bg-white w-full h-[46px] pl-10 rounded-[62px]" />
+            <Input
+              renderLeadingIcon={<MessageIcon />}
+              placeholder="Enter your email address"
+              className="w-full"
+            />
             <div className="mt-3">
               <MUIButton
                 variant="contained"
@@ -84,7 +88,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-t-white10" />
+        <div className="sm:mt-0 md:mt-10 lg:mt-0 mt-10 border-t border-t-white10" />
 
         <div className="lg:flex justify-center items-center lg:justify-between mt-5 mb-[82px]">
           <p className="font-santoshi text-sm flex justify-center font-normal text-black60">

@@ -3,9 +3,11 @@ import { UseFormRegister } from 'react-hook-form';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import {
   IconButton,
+  InputAdornment,
   InputBase,
   InputBaseProps,
   InputLabel,
+  SvgIcon,
   Typography,
 } from '@mui/material';
 import clsx from 'classnames';
@@ -23,6 +25,11 @@ export const Input = ({
   type,
   renderLeadingIcon,
   disableErrorMessage = false,
+  value,
+  startIcon,
+  endIcon,
+  onClickIconEnd,
+
   ...props
 }: InputBaseProps & {
   register?: UseFormRegister<any>;
@@ -31,9 +38,36 @@ export const Input = ({
   errorMessage?: string;
   renderLeadingIcon?: React.ReactNode;
   disableErrorMessage?: boolean;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+  onClickIconEnd?: () => void;
 }) => {
   const { colors } = useTheme();
   const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const adornment = (position: 'start' | 'end', icon?: React.ReactNode) => {
+    if (!icon) {
+      return undefined;
+    }
+    return (
+      <InputAdornment position={position}>
+        {position === 'start' ? (
+          <SvgIcon>{icon}</SvgIcon>
+        ) : (
+          <div
+            // className="cursor-pointer"
+            className={clsx(
+              'absolute inset-y-0 right-0 text-[#000] mr-5 flex items-center',
+              value ? 'cursor-pointer' : 'cursor-default ',
+            )}
+            onClick={onClickIconEnd}>
+            <SvgIcon className="z-50">{icon}</SvgIcon>
+          </div>
+        )}
+      </InputAdornment>
+    );
+  };
+
   return (
     <div className={clsx('w-full', contentContainerStyle)}>
       {label ? (
@@ -48,6 +82,8 @@ export const Input = ({
         <InputBase
           className={clsx('w-full ring-0', className)}
           type={isShowPassword ? 'text' : type}
+          endAdornment={adornment('end', endIcon)}
+          startAdornment={adornment('start', startIcon)}
           componentsProps={{
             root: {
               className: clsx(
@@ -70,6 +106,7 @@ export const Input = ({
         ) : (
           <></>
         )}
+
         {type === 'password' ? (
           <div className="absolute top-3 right-4 z-20">
             <IconButton

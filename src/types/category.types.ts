@@ -1,4 +1,4 @@
-import { DefaultStatus } from './common-global.types';
+import { DefaultStatus, IPaginationParam } from './common-global.types';
 
 export interface ICategory {
   id: string;
@@ -16,4 +16,8 @@ export interface IUpdateCategory {
 
 export interface ICreateCategory {
   name: string;
+}
+
+export interface IQueryParamCategory extends IPaginationParam {
+  content?: string;
 }

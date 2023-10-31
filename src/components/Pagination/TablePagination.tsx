@@ -29,7 +29,7 @@ const TablePagination = ({
     <MUITablePagination
       component="div"
       count={count}
-      page={page}
+      page={page - 1 <= 0 ? 0 : page - 1}
       onPageChange={handleChange}
       rowsPerPage={rowsPerPage}
       sx={sx}

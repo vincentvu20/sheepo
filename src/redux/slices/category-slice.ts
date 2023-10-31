@@ -1,14 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { NetworkService } from '@/services/network-service';
-import { ICreateCategory, IUpdateCategory } from '@/types/category.types';
-import { IPaginationParam, IUpdate } from '@/types/common-global.types';
+import {
+  ICreateCategory,
+  IQueryParamCategory,
+  IUpdateCategory,
+} from '@/types/category.types';
+import { IUpdate } from '@/types/common-global.types';
 import { ICategoryInitState } from '../types/category.redux.types';
 
 const PREFIX_CATEGORY_SLICE = 'CATEGORY';
 
 export const getListCategory = createAsyncThunk(
   `${PREFIX_CATEGORY_SLICE}/LIST`,
-  async (params: IPaginationParam, { rejectWithValue }) => {
+  async (params: IQueryParamCategory, { rejectWithValue }) => {
     try {
       const { data } = await NetworkService.get('CATEGORY', {
         params,
@@ -44,7 +48,6 @@ export const updateCategory = createAsyncThunk(
         suffix: `/${body.id}`,
         isCms: true,
       });
-      console.log(data);
       return data;
     } catch (error) {
       throw rejectWithValue(error);
@@ -69,6 +72,7 @@ export const createCategory = createAsyncThunk(
 const initialState: ICategoryInitState = {
   categories: undefined,
   category: undefined,
+  totalItem: undefined,
   message: undefined,
 };
 
@@ -76,28 +80,6 @@ const categorySlice = createSlice({
   name: PREFIX_CATEGORY_SLICE,
   initialState,
   reducers: {},
-  extraReducers: builder => {
-    builder.addCase(getListCategory.fulfilled, (state, action) => {
-      if (action?.payload?.data) {
-        state.categories = action.payload.data;
-      }
-    });
-    builder.addCase(getDetailCategory.fulfilled, (state, action) => {
-      if (action?.payload?.data) {
-        state.category = action.payload.data;
-      }
-    });
-    builder.addCase(updateCategory.fulfilled, (state, action) => {
-      if (action?.payload?.data) {
-        state.message = action.payload.data;
-      }
-    });
-    builder.addCase(createCategory.fulfilled, (state, action) => {
-      if (action?.payload?.data) {
-        state.category = action.payload.data;
-      }
-    });
-  },
 });
 
 export const categoryReducer = categorySlice.reducer;

@@ -18,3 +18,4 @@ export * from './Tabs';
 export * from './TabPanel';
 export * from './Rating';
 export * from './icons';
+export * from './ColorPicker';

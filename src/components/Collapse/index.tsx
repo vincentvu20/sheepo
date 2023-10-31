@@ -17,7 +17,7 @@ export const Collapse = ({ className, title, children }: ICollapse) => {
     <Menu>
       <div
         className={clsx(
-          'flex items-center justify-between w-full border-b p-1',
+          'flex items-center justify-between w-full p-1 ',
           className,
         )}
         onClick={handleShow}>

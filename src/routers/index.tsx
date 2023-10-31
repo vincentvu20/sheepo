@@ -16,10 +16,7 @@ import {
   ProductsPage,
   UsersPage,
 } from '@/pages/cms';
-import {
-  HomePage as HomePageWeb,
-  ProductDetailPage as ProductDetailPageWeb,
-} from '@/pages/customer';
+import { Casual, HomePage as HomePageWeb } from '@/pages/customer';
 
 export const Routers = createBrowserRouter(
   createRoutesFromElements(
@@ -46,6 +43,20 @@ export const Routers = createBrowserRouter(
               href: 'products',
               name: 'Products',
             }),
+          }}
+        />
+      </Route>
+      <Route path="casual" element={<MainLayout />}>
+        <Route
+          index
+          element={<Casual />}
+          handle={{
+            crumb: () => {
+              return {
+                href: '/casual',
+                name: 'Casual',
+              };
+            },
           }}
         />
       </Route>

@@ -5,7 +5,7 @@ interface RangeSliderProps extends Omit<SliderOwnProps, 'onChange'> {
   onChange: (newValue: [number, number]) => void;
   min: number;
   max: number;
-  valueLabelDisplay: 'auto' | 'on' | 'off';
+  valueLabelDisplay?: 'auto' | 'on' | 'off';
   format: (value: string | number) => string | number;
   sx?: SxProps;
 }

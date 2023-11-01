@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { LockClosedIcon, UserIcon } from '@heroicons/react/24/outline';
@@ -5,24 +6,34 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FacebookIcon, GoogleIcon } from '@/assets';
 import { LoginSchema } from '@/common/utils/schema';
 import { Button, Input } from '@/components';
+import { useAppDispatch } from '@/hooks/common-hook';
+import { login } from '@/redux/slices';
 import { ModalServices } from '@/services/modal-service';
+import { IErrorsProps } from '@/types/common-global.types';
 
 const SignIn = (props: any) => {
   const { show, setShow } = props;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(LoginSchema),
   });
-  const onSubmit = handleSubmit(() => {
-    if (!!isDirty && !!isValid) {
+  const onSubmit = handleSubmit(async data => {
+    try {
+      setIsLoading(true);
+      await dispatch(login(data)).unwrap();
       navigate('/');
-      ModalServices.showMessageSuccess({
-        message: 'Logged in successfully',
-      });
+      ModalServices.showMessageSuccess({ message: 'Login successfully' });
+    } catch (error) {
+      const err = error as IErrorsProps;
+      ModalServices.showMessageError({ message: err.message });
+    } finally {
+      setIsLoading(false);
     }
   });
   return (
@@ -54,7 +65,10 @@ const SignIn = (props: any) => {
           errorMessage={errors?.password?.message}
           renderLeadingIcon={<LockClosedIcon />}
         />
-        <Button type="submit" className="!font-santoshi !py-3 !mt-3 !text-lg">
+        <Button
+          disabled={isLoading}
+          type="submit"
+          className="!font-santoshi !py-3 !mt-3 !text-lg">
           Login
         </Button>
       </form>

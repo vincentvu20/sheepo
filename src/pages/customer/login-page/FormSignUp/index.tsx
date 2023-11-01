@@ -1,24 +1,36 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '@/common/utils/schema';
 import { Button, Input } from '@/components';
+import { useAppDispatch } from '@/hooks/common-hook';
+import { login } from '@/redux/slices';
 import { ModalServices } from '@/services/modal-service';
+import { IErrorsProps } from '@/types/common-global.types';
 
 const FormSignUp = (props: any) => {
   const { show, setShow } = props;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(LoginSchema),
   });
-  const onSubmit = handleSubmit(() => {
-    if (!!isDirty && !!isValid) {
+  const onSubmit = handleSubmit(async data => {
+    try {
+      setIsLoading(true);
+      await dispatch(login(data)).unwrap();
       setShow(!show);
-      ModalServices.showMessageSuccess({
-        message: 'Registered successfully',
-      });
+      ModalServices.showMessageSuccess({ message: 'Register successfully' });
+    } catch (error) {
+      const err = error as IErrorsProps;
+      ModalServices.showMessageError({ message: err.message });
+    } finally {
+      setIsLoading(false);
     }
   });
 
@@ -67,7 +79,10 @@ const FormSignUp = (props: any) => {
           register={register}
           name="password"
         />
-        <Button type="submit" className="!font-santoshi !py-3 !text-lg !mt-3">
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="!font-santoshi !py-3 !text-lg !mt-3">
           Register
         </Button>
       </form>

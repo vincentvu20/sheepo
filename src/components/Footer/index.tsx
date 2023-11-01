@@ -18,15 +18,16 @@ export const Footer = () => {
   return (
     <div className="bg-snowFlake">
       <Container>
-        <div className="md:flex justify-between items-center bg-black rounded-[20px] sm:py-0 py-5 sm:px-16 px-6 lg:h-[180px] lg:mt-[-90px]">
-          <h1 className="text-4xl text-white font-integralCF max-w-[551px] sm:mb-0 mb-8">
+        <div className="lg:flex justify-between items-center bg-black rounded-[20px] lg:py-0 py-5 sm:px-16 px-6 lg:h-[180px] mt-[-90px]">
+          <h1 className="text-3xl sm:text-4xl text-white font-integralCF max-w-[551px] sm:mb-0 mb-8">
             STAY UPTO DATE ABOUT OUR LATEST OFFERS
           </h1>
-          <div className="">
+          <div className="lg:mt-0 mt-5">
             <Input
               renderLeadingIcon={<MessageIcon />}
               placeholder="Enter your email address"
               className="w-full"
+              disableErrorMessage
             />
             <div className="mt-3">
               <MUIButton

@@ -12,7 +12,7 @@ export const LIST_POINT = [
     description: 'High-Quality Products',
   },
   {
-    point: '0',
+    point: '1',
     description: '',
   },
   {

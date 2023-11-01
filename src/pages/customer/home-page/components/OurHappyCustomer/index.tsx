@@ -12,7 +12,7 @@ export const OurHappyCustomer = () => {
   const swiperRef = useRef<any>(null);
 
   return (
-    <div className="h-[500px]">
+    <div className="">
       <Container>
         <div className="flex justify-between mt-20">
           <TitleSection
@@ -30,7 +30,7 @@ export const OurHappyCustomer = () => {
             </button>
           </div>
         </div>
-        <div className="w-400px mt-10">
+        <div className="w-400px mt-10 mb-40">
           <Swiper
             breakpoints={{
               340: {

@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button } from '@/components';
 import { Container } from '@/components';
 import { LIST_POINT } from './components/__mocks__/data';
 import { ListPoint } from './components/ListPoint';
@@ -18,18 +18,23 @@ export const BannerSection = () => {
               of style.
             </p>
             <div className="mt-8">
-              <Button
-                className="w-[210px] mt-8 !rounded-[62px]"
-                variant="contained">
+              <Button className="sm:w-[210px] w-full sm:mt-8 mt-6 !rounded-[62px]">
                 Shop Now
               </Button>
             </div>
             <div className="justify-center flex flex-wrap gap-4 leading-[74px] mt-8">
               {LIST_POINT.map((item, i) => {
+                if (item.point == '0' || item.point == '1') {
+                  return (
+                    <div>
+                      <div className="flex h-full w-[5px] items-center justify-center sm:border-l sm:border-l-black10 leading-5" />
+                    </div>
+                  );
+                }
                 if (item.point == '0') {
                   return (
                     <div>
-                      <div className="flex h-full w-[5px] items-center justify-center lg:border-l lg:border-l-black10 leading-5" />
+                      <div className="flex h-full w-[5px] items-center justify-center border-l border-l-black leading-5" />
                     </div>
                   );
                 }

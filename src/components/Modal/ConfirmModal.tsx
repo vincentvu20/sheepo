@@ -2,12 +2,13 @@ import {
   Box,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  // DialogTitle,
   Typography,
 } from '@mui/material';
 import { IConfirmModalProps } from '@/models/modal.model';
 import { ModalServices } from '@/services/modal-service';
 import { Button } from '..';
+import { CloseIcon } from '../icons';
 
 export const ConfirmModal = ({
   onCancel,
@@ -27,12 +28,18 @@ export const ConfirmModal = ({
     ModalServices.hideModal?.();
   };
   return (
-    <Box sx={{ minWidth: 500 }}>
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
+    <Box sx={{ minWidth: 600, paddingX: '40px', paddingY: '50px' }}>
+      {/* <DialogTitle>{title}</DialogTitle> */}
+      <div className="flex justify-between">
+        <p>{title}</p>
+        <button type="button" onClick={handleClose}>
+          <CloseIcon />
+        </button>
+      </div>
+      <DialogContent className="!px-0">
         <Typography>{message}</Typography>
       </DialogContent>
-      <DialogActions>
+      <DialogActions className="!p-0">
         <Button
           variant="rounded-outlined"
           sx={{ height: 44 }}
@@ -42,6 +49,7 @@ export const ConfirmModal = ({
         <Button
           sx={{
             height: 44,
+            boxShadow: 'none',
           }}
           onClick={handleConfirm}>
           {submitTitle}

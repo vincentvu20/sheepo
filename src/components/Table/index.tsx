@@ -55,7 +55,7 @@ export const Table = ({
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={onPageChange}
-        sx={sx}
+        sx={{ fontFamily: 'sans-serif', color: '' }}
         {...others}
       />
     );

@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import EastIcon from '@mui/icons-material/East';
-import SellIcon from '@mui/icons-material/Sell';
+import { SellIcon } from '@/assets';
+import shirt_1 from '@/assets/images/shirt-1.png';
+import shirt_2 from '@/assets/images/shirt-2.png';
+import shirt_3 from '@/assets/images/shirt-3.png';
 import { Breadcrumbs, Button, Input } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/hooks/common-hook';
 import { setCart } from '@/redux/slices/cart-slice';
@@ -15,30 +18,30 @@ export default function CartPage() {
       setCart([
         {
           id: 'xxxx',
-          amount: 3,
+          amount: 1,
           price: 145,
           size: 'Small',
           color: 'White',
-          name: 'string',
-          src: 'string',
+          name: 'Gradient Graphic T-shirt',
+          src: shirt_1,
         },
         {
           id: 'yyyy',
           amount: 1,
-          price: 145,
+          price: 180,
           size: 'Mall',
           color: 'White',
-          name: 'string',
-          src: 'string',
+          name: 'Checkered Shirt',
+          src: shirt_2,
         },
         {
           id: 'zzzz',
-          amount: 2,
-          price: 145,
+          amount: 1,
+          price: 240,
           size: 'Large',
           color: 'White',
-          name: 'string',
-          src: 'string',
+          name: 'Skinny Fit Jeans',
+          src: shirt_3,
         },
       ]),
     );
@@ -58,7 +61,7 @@ export default function CartPage() {
         Your Cart
       </h1>
       <div className="flex flex-col gap-5 xl:flex-row xl:p-0">
-        <div className="flex flex-col items-start w-full h-full px-3 rounded-3xl border xl:px-5">
+        <div className="flex flex-col items-start w-full h-full px-3 rounded-3xl border md:px-4 xl:px-5 ">
           {cart.items.map(item => (
             <Item data={item} />
           ))}
@@ -87,10 +90,10 @@ export default function CartPage() {
               </span>
             </h2>
           </div>
-          <div className="flex gap-3 w-full">
+          <div className="flex gap-3 w-full h-[48px]">
             <Input
               disableErrorMessage
-              className="!border-none"
+              className="!border-none h-full"
               type="text"
               placeholder="Add promo code"
               required
@@ -98,11 +101,9 @@ export default function CartPage() {
                 <SellIcon className="text-black60 cursor-pointer" />
               }
             />
-            <button className="!font-santoshi flex text-white w-[119px] justify-center items-center bg-black rounded-[62px] h-[48px]">
-              Apply
-            </button>
+            <Button className="!font-santoshi !px-10 !h-full">Apply</Button>
           </div>
-          <Button className="!font-santoshi !mb-[30px] !py-3 !text-5 h-[60px]">
+          <Button className="!font-santoshi !mb-[10px] !py-3 !text-5 !h-[60px]">
             Go to checkout &nbsp;
             <EastIcon />
           </Button>

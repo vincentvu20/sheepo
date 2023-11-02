@@ -1,7 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
-import shirt_1 from '@/assets/images/shirt-1.png';
 import { useAppDispatch, useAppSelector } from '@/hooks/common-hook';
 import { setCart } from '@/redux/slices';
 
@@ -38,10 +37,14 @@ const Item = (props: IItemProps) => {
 
   return (
     <div className=" flex w-full gap-4 py-5 border-b xl:gap-5 xl:py-6">
-      <img src={shirt_1} alt="###" className="rounded-lg w-[99px]" />
+      <img
+        src={data.src}
+        alt="###"
+        className="rounded-lg w-[99px] xl:w-[125px]"
+      />
       <div className="w-full">
-        <h2 className="flex justify-between items-center text-lg font-medium not-italic xl:text-2xl">
-          Gradient Graphic T-shirt
+        <h2 className="flex justify-between items-center text-base font-medium not-italic md:text-lg xl:text-xl">
+          {data.name}
           <DeleteIcon
             className="cursor-pointer text-error"
             onClick={() => handleDeleteItem(data.id)}
@@ -59,7 +62,7 @@ const Item = (props: IItemProps) => {
           <h2 className="text-[20px] font-medium not-italic xl:text-2xl">
             ${data.price * data.amount}
           </h2>
-          <div className=" flex gap-3 bg-snowFlake rounded-[62px] py-1 px-4 xl:gap-4 xl:py-3 xl:px-5">
+          <div className=" flex gap-3 bg-snowFlake rounded-[62px] px-3 md:py-1 md:px-4 xl:gap-3 xl:py-1 xl:px-4">
             <button onClick={() => handleCount(data.id, 'down')}>
               <RemoveIcon />
             </button>

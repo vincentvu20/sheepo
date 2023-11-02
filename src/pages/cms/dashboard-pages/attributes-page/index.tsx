@@ -1,22 +1,40 @@
 import { useCallback, useMemo, useState } from 'react';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { XMarkIcon } from '@heroicons/react/20/solid';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Drawer, IconButton, Typography } from '@mui/material';
-import { CmsForm, Column, Table } from '@/components';
+import { schemaCreateAttribute } from '@/common/utils/schema';
+import { Button, CmsForm, Column, Input, Table } from '@/components';
+import { useAppDispatch } from '@/hooks/common-hook';
+import { IPayloadCreateAttribute } from '@/models/attribute.model';
+import { createAttribute } from '@/redux/slices/attribute-slice';
 import { ModalServices } from '@/services/modal-service';
+import { IErrorsProps } from '@/types/common-global.types';
 import { ATTRIBUTES } from './__mocks__/data';
 
 export const AttributesPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: yupResolver(schemaCreateAttribute),
+  });
+
+  const dispatch = useAppDispatch();
   const [openCreateDrawer, setOpenCreateDrawer] = useState(false);
   const [openEditDrawer, setOpenEditDrawer] = useState(false);
+  const [_, setIsCreating] = useState(false);
 
-  const onEdit = (id: string) => {
+  const onEdit = (_: string) => {
     return () => {
       setOpenEditDrawer(true);
     };
   };
 
-  const onDelete = (id: string) => {
+  const onDelete = (_: string) => {
     return () => {
       ModalServices.showConfirmModal({
         title: 'Are you sure?',
@@ -93,14 +111,97 @@ export const AttributesPage = () => {
     return ATTRIBUTES.map(attribute => createData(attribute));
   }, [createData]);
 
+  const onCreateAttribute = useCallback(
+    async (data: IPayloadCreateAttribute) => {
+      try {
+        setIsCreating(true);
+        await dispatch(createAttribute(data)).unwrap();
+        ModalServices.showMessageSuccess({
+          message: 'Attribute created successfully',
+        });
+        setOpenCreateDrawer(false);
+      } catch (error) {
+        const err = error as IErrorsProps;
+        ModalServices.showMessageError({ message: err.message });
+      } finally {
+        setIsCreating(false);
+      }
+    },
+    [dispatch],
+  );
+
   // render
   const renderCreateForm = useMemo(() => {
     return (
-      <Box sx={{ minWidth: 500 }}>
-        <Typography variant="h4">Create Attribute</Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minWidth: 500,
+          padding: '20px',
+          height: '100%',
+        }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <Typography variant="h4">Create Attribute</Typography>
+          <IconButton onClick={() => setOpenCreateDrawer(false)}>
+            <XMarkIcon height={32} />
+          </IconButton>
+        </Box>
+        <Box
+          sx={{
+            marginTop: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+          }}>
+          <Input
+            placeholder="Input name here"
+            label="Name: "
+            required
+            name="name"
+            errorMessage={errors?.name?.message}
+            {...{ register }}
+          />
+          {/* <Input
+            placeholder="Input type here"
+            label="Type: "
+            required
+            name="type"
+            errorMessage={errors?.type?.message}
+            {...{ register }}
+          /> */}
+        </Box>
+        <Box sx={{ justifyContent: 'space-between', display: 'flex' }}>
+          <Button
+            sx={{ width: '40%' }}
+            variant="rounded-outlined"
+            onClick={() => {
+              setOpenCreateDrawer(false);
+            }}>
+            Cancel
+          </Button>
+          <Button
+            sx={{ width: '40%' }}
+            disabled={!isValid}
+            onClick={handleSubmit(onCreateAttribute)}>
+            Submit
+          </Button>
+        </Box>
       </Box>
     );
-  }, []);
+  }, [
+    errors?.name?.message,
+    handleSubmit,
+    isValid,
+    onCreateAttribute,
+    register,
+  ]);
 
   const renderEditForm = useMemo(() => {
     return (

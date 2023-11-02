@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import {
-  ChevronRightIcon,
   ShoppingBagIcon,
   ShoppingCartIcon,
   SwatchIcon,

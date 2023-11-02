@@ -9,7 +9,7 @@ import { FEEDBACK_LIST } from '../Banner/components/__mocks__/data';
 import { FeedBackCard } from './components/CardFeedBack';
 
 export const OurHappyCustomer = () => {
-  const swiperRef = useRef(null);
+  const swiperRef = useRef<any>(null);
 
   return (
     <div className="h-[500px]">
@@ -21,11 +21,11 @@ export const OurHappyCustomer = () => {
           />
           <div className="flex items-end justify-end">
             <button
-              onClick={() => swiperRef.current?.slidePrev()}
+              onClick={() => swiperRef.current?.slidePrev?.()}
               className="mr-4">
               <ArrowDownBold2 />
             </button>
-            <button onClick={() => swiperRef.current?.slideNext()}>
+            <button onClick={() => swiperRef.current?.slideNext?.()}>
               <ArrowDownBold1 />
             </button>
           </div>

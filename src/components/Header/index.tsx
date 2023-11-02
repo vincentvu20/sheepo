@@ -8,7 +8,7 @@ import { CloseIcon, SearchIcon } from '../icons';
 import { MenuMobileIcon } from '../icons/MenuMobileIcon';
 
 export const Header = () => {
-  const [open, toggle, setOpen] = useToggle();
+  const [open, toggle] = useToggle();
   const [search, setSearch] = useState('');
 
   const handleClearSearch = () => {

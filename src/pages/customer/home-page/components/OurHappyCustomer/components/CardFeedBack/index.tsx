@@ -1,4 +1,3 @@
-import { Card, CardContent, Typography } from '@mui/material';
 import { ActiveIcon } from '@/components/icons';
 import { RatingView } from '@/components/Rating';
 

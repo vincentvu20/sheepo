@@ -5,16 +5,11 @@ import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid';
 import { Box, Drawer, IconButton, Typography } from '@mui/material';
 import { useDebounce } from 'use-debounce';
 import { Button, CmsForm, Column, Input, Table } from '@/components';
-import { useAppDispatch, useTheme } from '@/hooks/common-hook';
-import {
-  createCategory,
-  getDetailCategory,
-  getListCategory,
-  updateCategory,
-} from '@/redux/slices';
+import { useAppDispatch } from '@/hooks/common-hook';
+import { createCategory, getListCategory } from '@/redux/slices';
 import { ModalServices } from '@/services/modal-service';
 import { ICategory, ICreateCategory } from '@/types/category.types';
-import { IErrorsProps, IUpdate } from '@/types/common-global.types';
+import { IErrorsProps } from '@/types/common-global.types';
 import { DateUtils } from '@/utils/date.utils';
 
 export const CategoriesPage = () => {
@@ -28,7 +23,7 @@ export const CategoriesPage = () => {
   const [totalItem, setTotalItem] = useState<number>(0);
   const [searchStr, setSearchStr] = useState<string>('');
   const [debounceContent] = useDebounce(searchStr, 500);
-  const [id, setId] = useState<number>();
+  const [_, setId] = useState<number>();
   // const [category, setCategory] = useState<ICategory>();
   const { register, handleSubmit, reset } = useForm({
     shouldUseNativeValidation: true,
@@ -75,7 +70,7 @@ export const CategoriesPage = () => {
     };
   };
 
-  const onDelete = (id: string) => {
+  const onDelete = (_: string) => {
     return () => {
       ModalServices.showConfirmModal({
         title: 'Are you sure?',
@@ -220,7 +215,7 @@ export const CategoriesPage = () => {
         </div>
       </Box>
     );
-  }, []);
+  }, [handleCreate, isLoading, register]);
 
   const renderEditForm = useMemo(() => {
     return (

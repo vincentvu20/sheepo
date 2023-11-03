@@ -1,6 +1,10 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Box } from '@mui/material';
 
+interface ColorPickerProps {
+  colorList: string[];
+
+}
 export const ColorPicker = ({
   colorList,
   setBackgroundColor,

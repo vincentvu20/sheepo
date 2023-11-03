@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
-import { ConfirmModal } from '@/components';
-import { IConfirmModalProps } from '@/models/modal.model';
+import { ConfirmModal, FormModal } from '@/components';
+import { IConfirmModalProps, IFormModalProps } from '@/models/modal.model';
 import { clearContent, dismissModal, showModal } from '@/redux/slices';
 import { store } from '@/redux/store';
 
@@ -14,6 +14,10 @@ function hideModal() {
 function showConfirmModal(props: IConfirmModalProps) {
   store.dispatch(showModal(<ConfirmModal {...props} />));
   // ModalPortalService.show?.(<ConfirmModal {...props} />);
+}
+
+function showFormModal(props: IFormModalProps) {
+  store.dispatch(showModal(<FormModal {...props} />));
 }
 
 function showMessageSuccess({ message }: { message: string }) {
@@ -33,6 +37,7 @@ function showMessageError({ message }: { message: string }) {
 }
 
 export const ModalServices = {
+  showFormModal,
   hideModal,
   showConfirmModal,
   showMessageError,

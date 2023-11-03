@@ -55,6 +55,21 @@ export const updateCategory = createAsyncThunk(
   },
 );
 
+export const deleteCategory = createAsyncThunk(
+  `${PREFIX_CATEGORY_SLICE}/UPDATE`,
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const { data } = await NetworkService.delete('CATEGORY', {
+        suffix: `/${id}`,
+        isCms: true,
+      });
+      return data;
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  },
+);
+
 export const createCategory = createAsyncThunk(
   `${PREFIX_CATEGORY_SLICE}/CREATE`,
   async (body: ICreateCategory, { rejectWithValue }) => {

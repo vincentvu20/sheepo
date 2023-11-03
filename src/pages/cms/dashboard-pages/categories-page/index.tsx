@@ -1,91 +1,210 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useCallback, useEffect, useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid';
-import { Box, Drawer, IconButton, Typography } from '@mui/material';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, IconButton } from '@mui/material';
 import { useDebounce } from 'use-debounce';
-import { Button, CmsForm, Column, Input, Table } from '@/components';
+import { schemaCreateCategoryCms } from '@/common';
+import { CmsForm, Column, Input, Table } from '@/components';
 import { useAppDispatch } from '@/hooks/common-hook';
-import { createCategory, getListCategory } from '@/redux/slices';
+import {
+  createCategory,
+  deleteCategory,
+  getDetailCategory,
+  getListCategory,
+  updateCategory,
+} from '@/redux/slices';
 import { ModalServices } from '@/services/modal-service';
-import { ICategory, ICreateCategory } from '@/types/category.types';
-import { IErrorsProps } from '@/types/common-global.types';
+import {
+  ICategory,
+  ICreateCategory,
+  IUpdateCategory,
+} from '@/types/category.types';
+import { IErrorsProps, IUpdate } from '@/types/common-global.types';
 import { DateUtils } from '@/utils/date.utils';
-import DialogFormCategory from './components/DialogFormCategories';
-// import { DialogFormCategories } from './components/DialogFormCategories';
 
 export const CategoriesPage = () => {
   const dispatch = useAppDispatch();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [openCreateDrawer, setOpenCreateDrawer] = useState(false);
-  const [openEditDrawer, setOpenEditDrawer] = useState(false);
-  const [categories, setCategories] = useState<ICategory[]>([]);
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(25);
-  const [totalItem, setTotalItem] = useState<number>(0);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [totalCategory, setTotalCategory] = useState<number>(0);
   const [searchStr, setSearchStr] = useState<string>('');
   const [debounceContent] = useDebounce(searchStr, 500);
-  // const [_, setId] = useState<number>();
-  // const [category, setCategory] = useState<ICategory>();
-  const [showModal, setShowModal] = useState<boolean>(false);
 
-  const { register, handleSubmit, reset } = useForm({
+  const createCategoryForm = useForm({
+    shouldUseNativeValidation: true,
+    resolver: yupResolver(schemaCreateCategoryCms),
+  });
+
+  const editCategoryForm = useForm({
     shouldUseNativeValidation: true,
   });
 
   const fetchCategoryList = useCallback(async () => {
     try {
+      setIsLoading(true);
       const { data, totalItem } = await dispatch(
         getListCategory({
           page,
           pageSize,
-          sortOrder: 'desc',
-          sortBy: 'created_at',
           content: debounceContent ? debounceContent : undefined,
+          sortBy: 'created_at',
+          sortOrder: 'desc',
         }),
       ).unwrap();
-
       setCategories(data as ICategory[]);
-      setTotalItem(totalItem);
+      setTotalCategory(totalItem);
     } catch (error: any) {
       ModalServices.showMessageError({ message: error.message });
+    } finally {
+      setIsLoading(false);
     }
-  }, [dispatch, page, pageSize, debounceContent]);
+  }, [debounceContent, dispatch, page, pageSize]);
 
-  // const fetchDetailCategory = useCallback(async () => {
-  //   try {
-  //     if (id) {
-  //       const { data } = await dispatch(getDetailCategory(id)).unwrap();
-  //       setCategory(data as ICategory);
-  //     }
-  //   } catch (error: any) {
-  //     ModalServices.showMessageError({ message: error.message });
-  //   }
-  // }, [dispatch, id]);
+  const handleCreate = async (data: ICreateCategory) => {
+    try {
+      setIsLoading(true);
+      await dispatch(createCategory(data as ICreateCategory)).unwrap();
+      ModalServices.showMessageSuccess({
+        message: 'Create category successfully',
+      });
+      createCategoryForm.reset();
+      await fetchCategoryList();
+    } catch (error) {
+      const err = error as IErrorsProps;
+      ModalServices.showMessageError({ message: err.message });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleUpdate = async (data: FieldValues) => {
+    try {
+      setIsLoading(true);
+      await dispatch(updateCategory(data as IUpdate<IUpdateCategory>)).unwrap();
+      ModalServices.showMessageSuccess({
+        message: 'Update category successfully',
+      });
+      editCategoryForm.reset();
+      await fetchCategoryList();
+    } catch (error) {
+      const err = error as IErrorsProps;
+      ModalServices.showMessageError({ message: err.message });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      setIsLoading(true);
+      await dispatch(deleteCategory(id)).unwrap();
+      ModalServices.showMessageSuccess({
+        message: 'Delete category successfully',
+      });
+      await fetchCategoryList();
+    } catch (error) {
+      const err = error as IErrorsProps;
+      ModalServices.showMessageError({ message: err.message });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchCategoryList();
   }, [fetchCategoryList]);
 
-  // const onEdit = (id: string) => {
-  //   setId(+id);
-  //   return () => {
-  //     setOpenEditDrawer(true);
-  //   };
-  // };
+  const handleSearch = (content: string) => setSearchStr(content);
 
-  const onDelete = (_: string) => {
+  const handleClickDelete = (id: number) => {
     return () => {
       ModalServices.showConfirmModal({
         title: 'Are you sure?',
-        message: 'Are you sure delete this attribute?',
-        onConfirm: () => {},
+        message: 'Are you sure delete this category?',
+        onConfirm: () => handleDelete(id),
         onCancel: () => {},
       });
     };
   };
 
-  const handleSearch = (content: string) => setSearchStr(content);
+  const handleClickCreate = () => {
+    const createForm = (
+      <div className=" flex flex-1 flex-col justify-between pr-7 pl-7">
+        <div>
+          <Input
+            placeholder="Name"
+            label="Name"
+            required
+            register={createCategoryForm.register}
+            name="name"
+          />
+        </div>
+      </div>
+    );
+    ModalServices.showFormModal({
+      sx: {
+        minWidth: 500,
+        borderRadius: 10,
+      },
+      loading: isLoading,
+      title: 'Create Category',
+      submitTitle: 'Submit',
+      onConfirm: createCategoryForm.handleSubmit(handleCreate),
+      onCancel: () => {
+        createCategoryForm.reset();
+      },
+      children: createForm,
+    });
+  };
+
+  const handleClickEdit = (id: number) => {
+    return async () => {
+      try {
+        const data = await dispatch(getDetailCategory(id)).unwrap();
+        editCategoryForm.setValue('id', id);
+        const detailForm = (
+          <div className=" flex flex-1 flex-col justify-between pr-7 pl-7">
+            <div>
+              <Input
+                placeholder="Name"
+                label="Name"
+                required
+                defaultValue={data?.name}
+                register={editCategoryForm.register}
+                name="data.name"
+              />
+              <Input
+                placeholder="Status"
+                label="Status"
+                defaultValue={data?.status}
+                required
+                register={editCategoryForm.register}
+                name="data.status"
+              />
+            </div>
+          </div>
+        );
+        ModalServices.showFormModal({
+          sx: {
+            minWidth: 500,
+            borderRadius: 10,
+          },
+          loading: isLoading,
+          title: 'Category',
+          submitTitle: 'Submit',
+          onConfirm: editCategoryForm.handleSubmit(handleUpdate),
+          onCancel: editCategoryForm.reset,
+          children: detailForm,
+        });
+      } catch (error: any) {
+        ModalServices.showMessageError({ message: error.message });
+      }
+    };
+  };
 
   const columns: Column[] = [
     {
@@ -101,7 +220,7 @@ export const CategoriesPage = () => {
     },
     {
       id: 'created_at',
-      label: 'Create At',
+      label: 'Created At',
       width: '15%',
       align: 'left',
       render: (row: any) => DateUtils.formatString(row.created_at),
@@ -120,11 +239,11 @@ export const CategoriesPage = () => {
       render: (row: any) => {
         return (
           <Box display="flex" flexDirection="row">
-            <IconButton color="primary" onClick={() => setShowModal(true)}>
+            <IconButton color="primary" onClick={handleClickEdit(row.id)}>
               <PencilSquareIcon height={24} />
             </IconButton>
 
-            <IconButton color="error" onClick={onDelete(row.id)}>
+            <IconButton color="error" onClick={handleClickDelete(row.id)}>
               <TrashIcon height={24} />
             </IconButton>
           </Box>
@@ -133,145 +252,36 @@ export const CategoriesPage = () => {
     },
   ];
 
-  const handleCreate = handleSubmit(async data => {
-    try {
-      setIsLoading(true);
-      await dispatch(createCategory(data as ICreateCategory)).unwrap();
-      ModalServices.showMessageSuccess({
-        message: 'Create category successfully',
-      });
-      await fetchCategoryList();
-      setOpenCreateDrawer(false);
-      reset();
-    } catch (error) {
-      const err = error as IErrorsProps;
-      ModalServices.showMessageError({ message: err.message });
-    } finally {
-      setIsLoading(false);
-    }
-  });
-
-  // const handleUpdate = handleSubmit(async data => {
-  //   try {
-  //     const dataUpdate = data as IUpdateCategory;
-  //     setIsLoading(true);
-  //     await dispatch(
-  //       updateCategory({
-  //         id,
-  //         data: dataUpdate,
-  //       }),
-  //     ).unwrap();
-  //     ModalServices.showMessageSuccess({
-  //       message: 'Update category successfully',
-  //     });
-  //     await fetchCategoryList();
-  //     setOpenCreateDrawer(false);
-  //     reset();
-  //   } catch (error) {
-  //     const err = error as IErrorsProps;
-  //     ModalServices.showMessageError({ message: err.message });
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // });
-
-  const createData = useCallback((category: ICategory, index: number) => {
-    return {
-      id: category.id,
-      index,
-      name: category.name,
-      status: category.status,
-      created_at: category.created_at,
-    };
-  }, []);
-
-  const rows = useMemo<any>(() => {
-    return categories.map((category, index) => createData(category, index + 1));
-  }, [createData, categories]);
-
-  const renderCreateForm = useMemo(() => {
-    return (
-      <Box
-        sx={{
-          minWidth: 500,
-          padding: '20px',
-          display: 'flex',
-          flex: 1,
-          flexDirection: 'column',
-        }}>
-        <Typography variant="h4">Create Category</Typography>
-        <div className="flex flex-1 flex-col justify-between mt-5">
-          <div>
-            <Input
-              placeholder="Name"
-              label="Name"
-              required
-              register={register}
-              name="name"
-            />
-          </div>
-          <Button
-            disabled={isLoading}
-            onClick={handleCreate}
-            className="w-full">
-            Submit
-          </Button>
-        </div>
-      </Box>
-    );
-  }, [handleCreate, isLoading, register]);
-
-  const renderEditForm = useMemo(() => {
-    return (
-      <Box sx={{ minWidth: 500 }}>
-        <Typography variant="h4">Category Detail</Typography>
-      </Box>
-    );
-  }, []);
+  const rows = categories?.length
+    ? categories.map((category, index) => ({
+        id: category.id,
+        index,
+        name: category.name,
+        status: category.status,
+        created_at: category.created_at,
+      }))
+    : [];
 
   return (
     <>
       <CmsForm
         title="Category Page"
-        onCreateNew={() => setOpenCreateDrawer(true)}
+        onCreateNew={handleClickCreate}
         onSearch={handleSearch}>
         <Table
           rows={rows}
+          loading={isLoading}
           columns={columns}
           isShowPagination
           paginationProps={{
             page,
-            count: totalItem,
+            count: totalCategory,
             rowsPerPage: pageSize,
-            onPageChange: page => setPage(page),
+            onPageChange: page => setPage(page + 1),
             onRowsPerPageChange: event => setPageSize(+event.target.value),
           }}
         />
       </CmsForm>
-      {/* <DialogFormCategories
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        type="create"
-      /> */}
-      <React.Fragment key="right">
-        <Drawer
-          anchor="right"
-          open={openCreateDrawer}
-          onClose={() => setOpenCreateDrawer(false)}>
-          {renderCreateForm}
-        </Drawer>
-        <Drawer
-          anchor="right"
-          open={openEditDrawer}
-          onClose={() => setOpenEditDrawer(false)}>
-          {renderEditForm}
-        </Drawer>
-        <DialogFormCategory
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-          type="edit"
-        />
-      </React.Fragment>
     </>
   );
 };

@@ -8,3 +8,7 @@ export const schemaLoginCms = yup.object().shape({
 export const schemaCreateAttribute = yup.object().shape({
   name: yup.string().required('This field is required'),
 });
+
+export const schemaCreateCategoryCms = yup.object().shape({
+  name: yup.string().required('Required'),
+});

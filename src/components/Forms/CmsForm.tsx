@@ -32,7 +32,7 @@ export const CmsForm = ({
               id="outlined-search"
               placeholder="Search"
               type="search"
-              inputProps={{ 'aria-label': 'Tìm kiếm' }}
+              inputProps={{ 'aria-label': 'Search' }}
               renderLeadingIcon={<MagnifyingGlassIcon />}
               disableErrorMessage
               contentContainerStyle="min-w-[300px]"

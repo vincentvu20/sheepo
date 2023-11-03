@@ -12,6 +12,8 @@ export * from './VisaIcon';
 export * from './MasterCardIcon';
 export * from './GooglePayIcon';
 export * from './ApplePayIcon';
+export * from './MinusIcon';
+export * from './PlusIcon';
 export * from './Zara';
 export * from './ActiveIcon';
 export * from './ArrowDownBold1';

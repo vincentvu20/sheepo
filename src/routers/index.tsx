@@ -18,9 +18,9 @@ import {
 } from '@/pages/cms';
 import {
   HomePage as HomePageWeb,
+  LoginPage as LoginPageWeb,
   ProductDetailPage as ProductDetailPageWeb,
 } from '@/pages/customer';
-import { LoginForm } from '@/pages/customer/login-page';
 
 export const Routers = createBrowserRouter(
   createRoutesFromElements(
@@ -51,7 +51,7 @@ export const Routers = createBrowserRouter(
         />
         <Route
           index
-          element={<LoginForm />}
+          element={<LoginPageWeb />}
           handle={{
             crumb: () => {
               return {

@@ -13,11 +13,14 @@ export const schemaCreateAttribute = yup.object().shape({
   name: yup.string().required('This field is required'),
 });
 
-export const LoginSchema = yup
-  .object({
-    name: yup.string().required(errorMessage.required),
-    email: yup.string().required(errorMessage.required),
-    phone: yup.string().required(errorMessage.required),
-    password: yup.string().required(errorMessage.required).min(8).max(16),
-  })
-  .required();
+export const SignInSchema = yup.object().shape({
+  email: yup.string().required(errorMessage.required).email('Email invalid'),
+  password: yup.string().required(errorMessage.required),
+});
+
+export const SignUpSchema = yup.object().shape({
+  email: yup.string().required(errorMessage.required).email('Email invalid'),
+  password: yup.string().required(errorMessage.required),
+  name: yup.string().required(errorMessage.required),
+  phone: yup.string().required(errorMessage.required),
+});

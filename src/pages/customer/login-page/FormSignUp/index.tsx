@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { LoginSchema } from '@/common/utils/schema';
+import clsx from 'classnames';
+import { SignUpSchema } from '@/common/utils/schema';
 import { Button, Input } from '@/components';
 import { useAppDispatch } from '@/hooks/common-hook';
 import { login } from '@/redux/slices';
@@ -18,7 +19,8 @@ const FormSignUp = (props: any) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(LoginSchema),
+    shouldUseNativeValidation: true,
+    resolver: yupResolver(SignUpSchema),
   });
   const onSubmit = handleSubmit(async data => {
     try {
@@ -36,7 +38,12 @@ const FormSignUp = (props: any) => {
 
   return (
     <div className="w-full p-5 my-auto">
-      <h1 className="text-4xl not-italic text-center font-bold font-integralCF cursor-default xl:text-5xl">
+      <h1
+        className={clsx(
+          'text-4xl text-center ',
+          'not-italic font-bold font-integralCF ',
+          'cursor-default xl:text-5xl',
+        )}>
         SHOP.CO
       </h1>
       <h1 className="text-2xl font-bold my-4 font-santoshi xl:text-3xl xl:my-8">

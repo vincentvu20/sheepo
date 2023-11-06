@@ -3,8 +3,9 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { LockClosedIcon, UserIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
+import clsx from 'classnames';
 import { FacebookIcon, GoogleIcon } from '@/assets';
-import { LoginSchema } from '@/common/utils/schema';
+import { SignInSchema } from '@/common/utils/schema';
 import { Button, Input } from '@/components';
 import { useAppDispatch } from '@/hooks/common-hook';
 import { login } from '@/redux/slices';
@@ -21,7 +22,8 @@ const SignIn = (props: any) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(LoginSchema),
+    shouldUseNativeValidation: true,
+    resolver: yupResolver(SignInSchema),
   });
   const onSubmit = handleSubmit(async data => {
     try {
@@ -38,10 +40,19 @@ const SignIn = (props: any) => {
   });
   return (
     <div className="w-full p-5 my-auto">
-      <h1 className="text-4xl not-italic text-center font-bold font-integralCF cursor-default xl:text-5xl">
+      <h1
+        className={clsx(
+          'text-4xl text-center',
+          'font-bold font-integralCF not-italic',
+          'cursor-default xl:text-5xl',
+        )}>
         SHOP.CO
       </h1>
-      <h2 className="text-2xl font-bold my-4 font-santoshi xl:text-3xl xl:my-8">
+      <h2
+        className={clsx(
+          'text-2xl font-bold my-4 font-santoshi',
+          'xl:text-3xl xl:my-8',
+        )}>
         Sign In
       </h2>
       <form onSubmit={onSubmit} className="flex flex-col">
@@ -72,19 +83,34 @@ const SignIn = (props: any) => {
           Login
         </Button>
       </form>
-      <div className="my-5 flex gap-5 flex-col items-center font-santoshi">
+      <div
+        className={clsx(
+          'flex flex-col items-center',
+          'gap-5 my-5 font-santoshi',
+        )}>
         <span>----- or -----</span>
-        <p className="flex items-center px-5 py-3 rounded-[62px] border cursor-pointer">
+        <p
+          className={clsx(
+            'flex items-center',
+            'px-5 py-3 rounded-[62px] border cursor-pointer',
+          )}>
           <GoogleIcon /> &nbsp; Sign in with Google
         </p>
-        <p className="flex items-center px-5 py-3 rounded-[62px] border cursor-pointer">
+        <p
+          className={clsx(
+            'flex items-center',
+            'px-5 py-3 rounded-[62px] border cursor-pointer',
+          )}>
           <FacebookIcon /> &nbsp; Sign in with Facebook
         </p>
         <p className="text-black60 text-xl">
           Don't have an account? &nbsp;
           <span
             onClick={() => setShow(!show)}
-            className="cursor-pointer text-black font-medium hover:underline ">
+            className={clsx(
+              'cursor-pointer text-black font-medium',
+              'hover:underline',
+            )}>
             Sign Up
           </span>
         </p>

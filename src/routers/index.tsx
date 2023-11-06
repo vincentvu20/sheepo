@@ -17,10 +17,10 @@ import {
   UsersPage,
 } from '@/pages/cms';
 import {
+  CartPage as CartPageWeb,
   HomePage as HomePageWeb,
   ProductDetailPage as ProductDetailPageWeb,
 } from '@/pages/customer';
-import CartPage from '@/pages/customer/cart-page';
 
 export const Routers = createBrowserRouter(
   createRoutesFromElements(
@@ -51,16 +51,18 @@ export const Routers = createBrowserRouter(
         />
         <Route
           index
-          element={<CartPage />}
+          element={<CartPageWeb />}
           handle={{
-            crumb: () => {
-              return {
-                href: 'cart',
-                name: 'Cart',
-              };
-            },
+            crumb: () => ({
+              href: 'cart',
+              name: 'Cart',
+              parentCrumb: {
+                href: '/',
+                name: 'Home',
+              },
+            }),
           }}
-          path="/cart"
+          path="cart"
         />
       </Route>
 

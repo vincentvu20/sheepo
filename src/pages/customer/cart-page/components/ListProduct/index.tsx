@@ -8,7 +8,7 @@ interface IItemProps {
   data: any;
 }
 
-const Item = (props: IItemProps) => {
+export const ListProduct = (props: IItemProps) => {
   const { data } = props;
 
   const { cart } = useAppSelector(store => store);
@@ -76,5 +76,3 @@ const Item = (props: IItemProps) => {
     </div>
   );
 };
-
-export default Item;

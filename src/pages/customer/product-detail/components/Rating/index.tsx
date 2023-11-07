@@ -1,14 +1,19 @@
-import React from 'react';
+import { useState } from 'react';
 import { Box } from '@mui/material';
 import { Button, Container, Select, TabPanel, Tabs } from '@/components';
 import { LIST_CARD_RATING } from './__mocks__/data';
 import { RatingCard } from './RatingCard';
 
 export const RatingSection = () => {
-  const [valueTab, setValueTab] = React.useState(1);
+  const [valueTab, setValueTab] = useState(1);
+  const [cardRatingValue, setCardRatingValue] = useState(LIST_CARD_RATING);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValueTab(newValue);
+  };
+
+  const handleLoadMoreRating = () => {
+    setCardRatingValue(cardRatingValue.concat(LIST_CARD_RATING));
   };
 
   const tabItems = ['Product Details', 'Rating & Reviews', 'FAQs'];
@@ -28,7 +33,9 @@ export const RatingSection = () => {
               <div className="flex">
                 <div className="flex items-center gap-2 grow-[2]">
                   <h1 className="font-bold text-2xl">All Reviews</h1>
-                  <h1 className="text-base text-black60">(451)</h1>
+                  <h1 className="text-base text-black60">
+                    ( {cardRatingValue.length})
+                  </h1>
                 </div>
                 <div className="flex items-center gap-2 grow-[8] justify-end">
                   <Select
@@ -48,11 +55,8 @@ export const RatingSection = () => {
                   </Button>
                 </div>
               </div>
-              <div className="flex justify-center items-center mt-9 mb-10 leading-5">
-                Rating Product Here
-              </div>
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
-                {LIST_CARD_RATING.map((item, i) => (
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 mt-9">
+                {cardRatingValue.map((item, i) => (
                   <RatingCard key={i} {...item} />
                 ))}
               </div>
@@ -63,7 +67,8 @@ export const RatingSection = () => {
                   sx={{
                     textTransform: 'none',
                     fontWeight: 'bold',
-                  }}>
+                  }}
+                  onClick={handleLoadMoreRating}>
                   Load More Reviews
                 </Button>
               </div>

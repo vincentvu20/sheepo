@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { green, pink, yellow } from '@mui/material/colors';
 import {
   Breadcrumbs,
@@ -9,23 +10,59 @@ import {
 } from '@/components';
 import { MinusIcon, PlusIcon } from '@/components/icons';
 import { RatingView } from '@/components/Rating';
+import { useAppDispatch } from '@/hooks/common-hook';
+import { getDetailProduct } from '@/redux/slices/product-slice';
+import { ModalServices } from '@/services/modal-service';
+import { IProduct } from '@/types/product.types';
+
+const dataProductDefault = {
+  id: 5,
+  name: 'One Life Graphic T-shirt',
+  price: 200,
+  cost: 300,
+  discount: 40,
+  description:
+    'This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.',
+  images: ['/tshirt3.png', '/tshirt2.png', '/tshirt1.png'],
+};
 
 export const ProductInfoSection = () => {
-  const product = {
-    name: 'One Life Graphic T-shirt',
-    price: 200,
-    cost: 300,
-    discount: '-40%',
-    description:
-      'This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.',
-    images: ['/tshirt3.png', '/tshirt2.png', '/tshirt1.png'],
-  };
-
+  const dispatch = useAppDispatch();
+  const { productId } = useParams();
   const [radioButtonValue, setRadioButtonValue] = useState('1');
+  const [product, setProduct] = useState<IProduct>(dataProductDefault);
+  const [productQuantity, setProductQuantity] = useState(0);
+
+  const fetchDetailProduct = useCallback(async () => {
+    try {
+      const { data } = await dispatch(
+        getDetailProduct(Number(productId)),
+      ).unwrap();
+
+      const dataProduct = data ? data : dataProductDefault;
+      setProduct(dataProduct as IProduct);
+    } catch (error: any) {
+      ModalServices.showMessageError({ message: error.message });
+    }
+  }, [dispatch, productId]);
+
+  useEffect(() => {
+    fetchDetailProduct();
+  }, [fetchDetailProduct]);
+
   const handleRadioButtonChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setRadioButtonValue(event.target.value);
+  };
+
+  const handlePlusQuantity = () => {
+    setProductQuantity(productQuantity + 1);
+  };
+  const handleMinusQuantity = () => {
+    setProductQuantity(
+      productQuantity === 0 ? productQuantity : productQuantity - 1,
+    );
   };
 
   return (
@@ -36,7 +73,7 @@ export const ProductInfoSection = () => {
       <div className="flex gap-4 flex-wrap">
         <div className="flex gap-3 flex-row flex-wrap-reverse">
           <div className="w-[152px] flex flex-col gap-4 max-sm:flex-row max-sm:w-[111px] max-sm:gap-2">
-            {product.images.map(item => {
+            {product?.images?.map(item => {
               return (
                 <img
                   src={item}
@@ -55,21 +92,21 @@ export const ProductInfoSection = () => {
           </div>
         </div>
         <div className="max-w-screen-xsmall flex flex-col gap-3">
-          <TitleSection name={product.name} className="text-4xl" />
+          <TitleSection name={product?.name || ''} className="text-4xl" />
           <div className="flex gap-4 mt-3">
             <RatingView value={4.5} />
           </div>
           <div className="flex gap-2 items-center align-middle">
-            <span className="text-3xl font-bold">${product.price}</span>
+            <span className="text-3xl font-bold">${product?.price}</span>
             <span className="text-3xl font-bold text-black40 line-through">
-              <del>${product.cost}</del>
+              <del>${product?.cost}</del>
             </span>
             <p className="py-[6px] px-[14px] rounded-[62px] h-[28px] bg-errorLight text-error flex justify-center items-center text-s font-santoshi font-medium max-w-[60px]">
-              {product.discount}
+              -{product?.discount}%
             </p>
           </div>
           <span className="text-[16px] font-santoshi text-black60 ">
-            {product.description}
+            {product?.description}
           </span>
           <div className="border border-black10"></div>
           <h1 className="text-[16px] font-santoshi text-black60">
@@ -142,9 +179,28 @@ export const ProductInfoSection = () => {
           <div className="border border-black10"></div>
           <div className="flex gap-5 mt-2">
             <div className="bg-snowFlake flex flex-row gap-10 h-[52px] items-center rounded-[62px] py-[16px] px-[20px]">
-              <MinusIcon />
-              <h1 className="text-[16px] font-santoshi font-[500px]">1</h1>
-              <PlusIcon />
+              <Button
+                variant="empty"
+                sx={{
+                  textTransform: 'none',
+                  width: '100%',
+                }}
+                onClick={handleMinusQuantity}>
+                <MinusIcon />
+              </Button>
+
+              <h1 className="text-[16px] font-santoshi font-[500px]">
+                {productQuantity}
+              </h1>
+              <Button
+                variant="empty"
+                sx={{
+                  textTransform: 'none',
+                  width: '100%',
+                }}
+                onClick={handlePlusQuantity}>
+                <PlusIcon />
+              </Button>
             </div>
             <Button
               variant="rounded-contained"

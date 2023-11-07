@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { green, pink, yellow } from '@mui/material/colors';
 import {
   Breadcrumbs,
   Button,
-  Checkbox,
   Container,
+  RadioButton,
   TitleSection,
 } from '@/components';
 import { MinusIcon, PlusIcon } from '@/components/icons';
@@ -18,6 +19,13 @@ export const ProductInfoSection = () => {
     description:
       'This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.',
     images: ['/tshirt3.png', '/tshirt2.png', '/tshirt1.png'],
+  };
+
+  const [radioButtonValue, setRadioButtonValue] = useState('1');
+  const handleRadioButtonChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setRadioButtonValue(event.target.value);
   };
 
   return (
@@ -68,7 +76,7 @@ export const ProductInfoSection = () => {
             Select Colors
           </h1>
           <div className="flex">
-            <Checkbox
+            <RadioButton
               sx={{
                 color: pink[800],
                 '&.Mui-checked': {
@@ -76,8 +84,11 @@ export const ProductInfoSection = () => {
                 },
                 '& .MuiSvgIcon-root': { fontSize: 38 },
               }}
+              value="1"
+              onChange={handleRadioButtonChange}
+              checked={radioButtonValue === '1'}
             />
-            <Checkbox
+            <RadioButton
               sx={{
                 color: yellow[800],
                 '&.Mui-checked': {
@@ -85,8 +96,11 @@ export const ProductInfoSection = () => {
                 },
                 '& .MuiSvgIcon-root': { fontSize: 38 },
               }}
+              value="2"
+              onChange={handleRadioButtonChange}
+              checked={radioButtonValue === '2'}
             />
-            <Checkbox
+            <RadioButton
               sx={{
                 color: green[800],
                 '&.Mui-checked': {
@@ -94,6 +108,9 @@ export const ProductInfoSection = () => {
                 },
                 '& .MuiSvgIcon-root': { fontSize: 38 },
               }}
+              value="3"
+              onChange={handleRadioButtonChange}
+              checked={radioButtonValue === '3'}
             />
           </div>
           <div className="border border-black10"></div>

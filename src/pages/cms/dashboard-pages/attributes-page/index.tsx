@@ -1,18 +1,27 @@
-import { useCallback, useMemo, useState } from 'react';
-import React from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Drawer, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  Chip,
+  Dialog,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from '@mui/material';
 import { schemaCreateAttribute } from '@/common/utils/schema';
 import { Button, CmsForm, Column, Input, Table } from '@/components';
-import { useAppDispatch } from '@/hooks/common-hook';
+import { useAppDispatch, useAppSelector, useTheme } from '@/hooks/common-hook';
 import { IPayloadCreateAttribute } from '@/models/attribute.model';
-import { createAttribute } from '@/redux/slices/attribute-slice';
+import {
+  createAttribute,
+  getListAttribute,
+} from '@/redux/slices/attribute-slice';
 import { ModalServices } from '@/services/modal-service';
-import { IErrorsProps } from '@/types/common-global.types';
-import { ATTRIBUTES } from './__mocks__/data';
+import { DefaultStatus, IErrorsProps } from '@/types/common-global.types';
 
 export const AttributesPage = () => {
   const {
@@ -24,13 +33,73 @@ export const AttributesPage = () => {
   });
 
   const dispatch = useAppDispatch();
-  const [openCreateDrawer, setOpenCreateDrawer] = useState(false);
-  const [openEditDrawer, setOpenEditDrawer] = useState(false);
-  const [_, setIsCreating] = useState(false);
+  const { colors } = useTheme();
+  const { attributes = [] } = useAppSelector(state => state.attribute);
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
+  const [anchorElStatus, setAnchorElStatus] = useState<null | HTMLElement>(
+    null,
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(25);
+  const [totalItem, setTotalItem] = useState(0);
+
+  const openMenuStatus = Boolean(anchorElStatus);
+  const handleClickStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElStatus(event.currentTarget);
+  };
+  const handleCloseMenuStatus = () => {
+    setAnchorElStatus(null);
+  };
+
+  const handleChangeStatus = (status: `${DefaultStatus}`) => {
+    return () => {
+      console.log('status => ', status);
+      setAnchorElStatus(null);
+    };
+  };
+
+  const getAttributes = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const { totalItem, page: pageRes } = await dispatch(
+        getListAttribute({ pageSize, page: 1 }),
+      ).unwrap();
+      setTotalItem(totalItem);
+      setPage(pageRes);
+    } catch (error) {
+      const err = error as IErrorsProps;
+      ModalServices.showMessageError(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [dispatch, pageSize]);
+
+  const onLoadMore = useCallback(
+    async (page: number) => {
+      try {
+        // setPage(prev => prev + 1);
+        setIsLoading(true);
+        const { totalItem, page: pageRes } = await dispatch(
+          getListAttribute({ pageSize, page: page + 1 }),
+        ).unwrap();
+        setTotalItem(totalItem);
+        setPage(pageRes);
+      } catch (error) {
+        const err = error as IErrorsProps;
+        ModalServices.showMessageError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [dispatch, pageSize],
+  );
 
   const onEdit = (_: string) => {
     return () => {
-      setOpenEditDrawer(true);
+      setOpenEditModal(true);
     };
   };
 
@@ -52,8 +121,8 @@ export const AttributesPage = () => {
       width: '20%',
     },
     {
-      id: 'content',
-      label: 'Content',
+      id: 'name',
+      label: 'Name',
       width: '60%',
       align: 'left',
     },
@@ -68,6 +137,41 @@ export const AttributesPage = () => {
       label: 'Status',
       width: '10%',
       align: 'left',
+      render: (row: any) => {
+        return (
+          <div>
+            <button
+              onClick={handleClickStatus}
+              id="basic-button"
+              aria-controls={openMenuStatus ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={openMenuStatus ? 'true' : undefined}>
+              <Chip
+                label={row.status}
+                color={
+                  row.status === DefaultStatus.Active ? 'success' : 'error'
+                }
+              />
+            </button>
+            <Menu
+              elevation={1}
+              id="basic-menu"
+              anchorEl={anchorElStatus}
+              open={openMenuStatus}
+              onClose={handleCloseMenuStatus}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}>
+              <MenuItem onClick={handleChangeStatus('active')}>
+                <Typography color={colors.success}>Active</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleChangeStatus('inactive')}>
+                <Typography color={colors.error}>Inactive</Typography>
+              </MenuItem>
+            </Menu>
+          </div>
+        );
+      },
     },
     {
       id: 'action',
@@ -90,16 +194,11 @@ export const AttributesPage = () => {
     },
   ];
 
-  const createData = useCallback(
-    (attribute: {
-      type: string;
-      content: string;
-      id: string;
-      status: string;
-    }) => {
+  const createDataTableRow = useCallback(
+    (attribute: { type: string; name: string; id: string; status: string }) => {
       return {
         id: attribute.id,
-        content: attribute.content,
+        name: attribute.name,
         status: attribute.status,
         type: attribute.type,
       };
@@ -108,8 +207,8 @@ export const AttributesPage = () => {
   );
 
   const rows = useMemo<any>(() => {
-    return ATTRIBUTES.map(attribute => createData(attribute));
-  }, [createData]);
+    return attributes.map(attribute => createDataTableRow(attribute));
+  }, [attributes, createDataTableRow]);
 
   const onCreateAttribute = useCallback(
     async (data: IPayloadCreateAttribute) => {
@@ -119,7 +218,7 @@ export const AttributesPage = () => {
         ModalServices.showMessageSuccess({
           message: 'Attribute created successfully',
         });
-        setOpenCreateDrawer(false);
+        setOpenCreateModal(false);
       } catch (error) {
         const err = error as IErrorsProps;
         ModalServices.showMessageError({ message: err.message });
@@ -130,8 +229,13 @@ export const AttributesPage = () => {
     [dispatch],
   );
 
+  // effect
+  useEffect(() => {
+    getAttributes();
+  }, [getAttributes]);
+
   // render
-  const renderCreateForm = useMemo(() => {
+  const createForm = useMemo(() => {
     return (
       <Box
         sx={{
@@ -149,13 +253,13 @@ export const AttributesPage = () => {
             justifyContent: 'space-between',
           }}>
           <Typography variant="h4">Create Attribute</Typography>
-          <IconButton onClick={() => setOpenCreateDrawer(false)}>
+          <IconButton onClick={() => setOpenCreateModal(false)}>
             <XMarkIcon height={32} />
           </IconButton>
         </Box>
         <Box
           sx={{
-            marginTop: '20px',
+            // marginTop: '20px',
             display: 'flex',
             flexDirection: 'column',
             flex: 1,
@@ -168,21 +272,78 @@ export const AttributesPage = () => {
             errorMessage={errors?.name?.message}
             {...{ register }}
           />
-          {/* <Input
-            placeholder="Input type here"
-            label="Type: "
-            required
-            name="type"
-            errorMessage={errors?.type?.message}
-            {...{ register }}
-          /> */}
         </Box>
         <Box sx={{ justifyContent: 'space-between', display: 'flex' }}>
           <Button
             sx={{ width: '40%' }}
             variant="rounded-outlined"
             onClick={() => {
-              setOpenCreateDrawer(false);
+              setOpenCreateModal(false);
+            }}>
+            Cancel
+          </Button>
+          <Button
+            sx={{ width: '40%' }}
+            disabled={!isValid || isCreating}
+            onClick={handleSubmit(onCreateAttribute)}>
+            Submit
+          </Button>
+        </Box>
+      </Box>
+    );
+  }, [
+    errors?.name?.message,
+    handleSubmit,
+    isCreating,
+    isValid,
+    onCreateAttribute,
+    register,
+  ]);
+
+  const editForm = useMemo(() => {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minWidth: 500,
+          padding: '20px',
+          height: '100%',
+        }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <Typography variant="h4">Edit Attribute</Typography>
+          <IconButton onClick={() => setOpenEditModal(false)}>
+            <XMarkIcon height={32} />
+          </IconButton>
+        </Box>
+        <Box
+          sx={{
+            // marginTop: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+          }}>
+          <Input
+            placeholder="Input name here"
+            label="Name: "
+            required
+            name="name"
+            errorMessage={errors?.name?.message}
+            {...{ register }}
+          />
+        </Box>
+        <Box sx={{ justifyContent: 'space-between', display: 'flex' }}>
+          <Button
+            sx={{ width: '40%' }}
+            variant="rounded-outlined"
+            onClick={() => {
+              setOpenEditModal(false);
             }}>
             Cancel
           </Button>
@@ -203,45 +364,34 @@ export const AttributesPage = () => {
     register,
   ]);
 
-  const renderEditForm = useMemo(() => {
-    return (
-      <Box sx={{ minWidth: 500 }}>
-        <Typography variant="h4">Attribute detail</Typography>
-      </Box>
-    );
-  }, []);
-
   return (
     <>
       <CmsForm
         title="Attribute Page"
-        onCreateNew={() => setOpenCreateDrawer(true)}>
+        onCreateNew={() => setOpenCreateModal(true)}>
         <Table
           rows={rows}
           columns={columns}
           isShowPagination
+          loading={isLoading}
           paginationProps={{
-            page: 0,
-            count: 100,
-            rowsPerPage: 25,
-            onPageChange: () => {},
+            page: page,
+            count: totalItem,
+            rowsPerPage: pageSize,
+            onPageChange: onLoadMore,
+            onRowsPerPageChange: ({ target: { value } }) => {
+              // console.log('event => ', event);
+              setPageSize(+value || 25);
+            },
           }}
         />
       </CmsForm>
-      <React.Fragment key="right">
-        <Drawer
-          anchor="right"
-          open={openCreateDrawer}
-          onClose={() => setOpenCreateDrawer(false)}>
-          {renderCreateForm}
-        </Drawer>
-        <Drawer
-          anchor="right"
-          open={openEditDrawer}
-          onClose={() => setOpenEditDrawer(false)}>
-          {renderEditForm}
-        </Drawer>
-      </React.Fragment>
+      <Dialog open={openCreateModal} onClose={() => setOpenCreateModal(false)}>
+        {createForm}
+      </Dialog>
+      <Dialog open={openEditModal} onClose={() => setOpenEditModal(false)}>
+        {editForm}
+      </Dialog>
     </>
   );
 };

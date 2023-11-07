@@ -17,6 +17,9 @@ function showConfirmModal(props: IConfirmModalProps) {
 }
 
 function showMessageSuccess({ message }: { message: string }) {
+  if (!message) {
+    return;
+  }
   toast(message, {
     position: 'top-right',
     type: 'success',
@@ -25,6 +28,9 @@ function showMessageSuccess({ message }: { message: string }) {
 }
 
 function showMessageError({ message }: { message: string }) {
+  if (!message) {
+    return;
+  }
   toast(message, {
     position: 'top-right',
     type: 'error',

@@ -1,4 +1,6 @@
 import {
+  Box,
+  CircularProgress,
   Paper,
   SxProps,
   Table as MUITable,
@@ -61,6 +63,31 @@ export const Table = ({
     );
   }
 
+  const renderLoading = () => {
+    if (loading) {
+      return columns.map(column => {
+        if (!column.label) {
+          return <></>;
+        }
+        return (
+          <TableCell
+            key={column.id}
+            align={column.align}
+            sx={cellSx}
+            style={{
+              ...(column.width ? { width: column.width } : {}),
+              ...(column.minWidth ? { minWidth: column.minWidth } : {}),
+            }}>
+            <div role="status" className="animate-pulse">
+              <div className="h-5 bg-gray-200 rounded-[4px] dark:bg-gray-400 w-[70%]"></div>
+            </div>
+          </TableCell>
+        );
+      });
+    }
+    return <></>;
+  };
+
   const TableContent = (
     <MUITable {...props} sx={tableSx}>
       <TableHead>
@@ -78,37 +105,46 @@ export const Table = ({
             </TableCell>
           ))}
         </TableRow>
+        {Array(10)
+          .fill(1)
+          .map((_, idx) => {
+            return <TableRow key={idx}>{renderLoading()}</TableRow>;
+          })}
       </TableHead>
-      <TableBody>
-        {rows.map((row, rowIndex) => {
-          return (
-            <TableRow sx={rowSx} key={rowIndex}>
-              {columns.map((column, columnIndex) => {
-                const value = row[column.id];
-                return (
-                  <TableCell
-                    {...column}
-                    key={columnIndex}
-                    sx={cellSx}
-                    align={column?.align}>
-                    {column?.format
-                      ? column.format(value)
-                      : column?.render
-                      ? column.render(row)
-                      : value}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          );
-        })}
-      </TableBody>
+      {loading ? (
+        <></>
+      ) : (
+        <TableBody>
+          {rows.map((row, rowIndex) => {
+            return (
+              <TableRow sx={rowSx} key={rowIndex}>
+                {columns.map((column, columnIndex) => {
+                  const value = row[column.id];
+                  return (
+                    <TableCell
+                      {...column}
+                      key={columnIndex}
+                      sx={cellSx}
+                      align={column?.align}>
+                      {column?.format
+                        ? column.format(value)
+                        : column?.render
+                        ? column.render(row)
+                        : value}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      )}
     </MUITable>
   );
 
   return (
     <Paper>
-      <TableContainer>{loading ? <>Loading</> : TableContent}</TableContainer>
+      <TableContainer>{TableContent}</TableContainer>
       {paginationComponent}
     </Paper>
   );

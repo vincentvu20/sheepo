@@ -44,7 +44,7 @@ const initialState = {
   attributes: undefined,
 } as IAttributeState;
 
-const categorySlice = createSlice({
+const attributeSlice = createSlice({
   name: PREFIX_ATTRIBUTE_SLICE,
   initialState,
   reducers: {},
@@ -57,4 +57,4 @@ const categorySlice = createSlice({
   },
 });
 
-export const categoryReducer = categorySlice.reducer;
+export const attributeReducer = attributeSlice.reducer;

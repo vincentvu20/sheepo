@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_PATH } from '@/common';
 import { handleErrors } from '@/common/utils/method.utils';
-import { logout } from '@/redux/slices';
+import { logout, logoutCms } from '@/redux/slices';
 import { store } from '@/redux/store';
 import { IOptionRequest } from '@/types/common-global.types';
 import { ModalServices } from './modal-service';
@@ -46,12 +46,21 @@ instance.interceptors.response.use(
   function (error) {
     const err = handleErrors(error);
     if (error?.response?.data?.statusCode === UNAUTHORIZED_CODE) {
-      const token = store.getState()?.auth?.accessToken;
-      if (token) {
-        store.dispatch(logout() as any);
-        ModalServices.showMessageError({ message: 'Login session expired' });
+      const isCms = error?.response?.config?.isCms;
+      if (isCms) {
+        const token = store.getState()?.auth?.accessTokenCms;
+        if (token) {
+          store.dispatch(logoutCms() as any);
+          ModalServices.showMessageError({ message: 'Login session expired' });
+        }
+      } else {
+        const token = store.getState()?.auth?.accessToken;
+        if (token) {
+          store.dispatch(logout() as any);
+          ModalServices.showMessageError({ message: 'Login session expired' });
+        }
       }
-      err.message = 'Login session expired';
+      err.message = '';
     }
 
     return Promise.reject(err);

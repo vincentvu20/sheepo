@@ -31,22 +31,27 @@ export const ConfirmModal = ({
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <Typography>{message}</Typography>
+        <Box
+          marginTop={2}
+          width="100%"
+          display="flex"
+          flexDirection="row"
+          justifyContent="flex-end">
+          <Button
+            variant="rounded-outlined"
+            sx={{ height: 44, marginRight: '20px' }}
+            onClick={handleClose}>
+            {cancelTitle}
+          </Button>
+          <Button
+            sx={{
+              height: 44,
+            }}
+            onClick={handleConfirm}>
+            {submitTitle}
+          </Button>
+        </Box>
       </DialogContent>
-      <DialogActions>
-        <Button
-          variant="rounded-outlined"
-          sx={{ height: 44 }}
-          onClick={handleClose}>
-          {cancelTitle}
-        </Button>
-        <Button
-          sx={{
-            height: 44,
-          }}
-          onClick={handleConfirm}>
-          {submitTitle}
-        </Button>
-      </DialogActions>
     </Box>
   );
 };

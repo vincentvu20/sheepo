@@ -5,6 +5,7 @@ import clsx from 'classnames';
 enum VariantButton {
   'rounded-contained' = 'rounded-contained',
   'rounded-outlined' = 'rounded-outlined',
+  'empty' = 'empty',
 }
 
 type IButtonProps = {
@@ -19,7 +20,7 @@ export const Button = ({
   const defaultStyleByVariant = useMemo<{
     [k in `${VariantButton}`]: {
       className: string;
-      variant: 'contained' | 'outlined';
+      variant: 'contained' | 'outlined' | 'text';
     };
   }>(() => {
     return {
@@ -32,6 +33,10 @@ export const Button = ({
         className:
           '!rounded-full bg-white px-4 !py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50',
         variant: 'outlined',
+      },
+      empty: {
+        className: '',
+        variant: 'text',
       },
     };
   }, []);

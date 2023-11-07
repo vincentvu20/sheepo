@@ -3,4 +3,5 @@ export enum API_PATH {
   LOGIN = '/auth/login',
   CATEGORY = '/category',
   ATTRIBUTE = '/attribute',
+  PRODUCT = '/product',
 }

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import clsx from 'classnames';
 import { Breadcrumbs } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/hooks/common-hook';
 import { setCart } from '@/redux/slices/cart-slice';
@@ -16,11 +17,20 @@ export const CartPage = () => {
   return (
     <div className="max-w-[1440px] mx-auto font-santoshi p-2 md:p-3">
       <Breadcrumbs />
-      <h1 className="text-3xl font-bold font-integralCF mb-3 xl:text-4xl xl:mb-6">
+      <h1
+        className={clsx(
+          'text-3xl font-bold font-integralCF mb-3',
+          'xl:text-4xl xl:mb-6',
+        )}>
         Your Cart
       </h1>
       <div className="flex flex-col gap-5 xl:flex-row xl:p-0">
-        <div className="flex flex-col items-start w-full h-full px-3 rounded-3xl border md:px-4 xl:px-5 ">
+        <div
+          className={clsx(
+            'flex flex-col items-start',
+            'w-full h-full px-3 rounded-3xl border',
+            'md:px-4 xl:px-5',
+          )}>
           {cart.items.map(item => (
             <ListProduct data={item} />
           ))}

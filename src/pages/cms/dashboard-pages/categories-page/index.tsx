@@ -11,6 +11,8 @@ import { ModalServices } from '@/services/modal-service';
 import { ICategory, ICreateCategory } from '@/types/category.types';
 import { IErrorsProps } from '@/types/common-global.types';
 import { DateUtils } from '@/utils/date.utils';
+import DialogFormCategory from './components/DialogFormCategories';
+// import { DialogFormCategories } from './components/DialogFormCategories';
 
 export const CategoriesPage = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +27,8 @@ export const CategoriesPage = () => {
   const [debounceContent] = useDebounce(searchStr, 500);
   const [_, setId] = useState<number>();
   // const [category, setCategory] = useState<ICategory>();
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const { register, handleSubmit, reset } = useForm({
     shouldUseNativeValidation: true,
   });
@@ -63,12 +67,12 @@ export const CategoriesPage = () => {
     fetchCategoryList();
   }, [fetchCategoryList]);
 
-  const onEdit = (id: string) => {
-    setId(+id);
-    return () => {
-      setOpenEditDrawer(true);
-    };
-  };
+  // const onEdit = (id: string) => {
+  //   setId(+id);
+  //   return () => {
+  //     setOpenEditDrawer(true);
+  //   };
+  // };
 
   const onDelete = (_: string) => {
     return () => {
@@ -116,7 +120,7 @@ export const CategoriesPage = () => {
       render: (row: any) => {
         return (
           <Box display="flex" flexDirection="row">
-            <IconButton color="primary" onClick={onEdit(row.id)}>
+            <IconButton color="primary" onClick={() => setShowModal(true)}>
               <PencilSquareIcon height={24} />
             </IconButton>
 
@@ -244,6 +248,11 @@ export const CategoriesPage = () => {
           }}
         />
       </CmsForm>
+      {/* <DialogFormCategories
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        type="create"
+      /> */}
       <React.Fragment key="right">
         <Drawer
           anchor="right"
@@ -257,6 +266,11 @@ export const CategoriesPage = () => {
           onClose={() => setOpenEditDrawer(false)}>
           {renderEditForm}
         </Drawer>
+        <DialogFormCategory
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          type="edit"
+        />
       </React.Fragment>
     </>
   );

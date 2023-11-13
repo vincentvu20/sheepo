@@ -1,10 +1,4 @@
-import {
-  Box,
-  DialogActions,
-  DialogContent,
-  // DialogTitle,
-  Typography,
-} from '@mui/material';
+import { Box, DialogContent, Typography } from '@mui/material';
 import { IConfirmModalProps } from '@/models/modal.model';
 import { ModalServices } from '@/services/modal-service';
 import { Button } from '..';

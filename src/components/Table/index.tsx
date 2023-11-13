@@ -1,6 +1,4 @@
 import {
-  Box,
-  CircularProgress,
   Paper,
   SxProps,
   Table as MUITable,
@@ -79,7 +77,7 @@ export const Table = ({
               ...(column.minWidth ? { minWidth: column.minWidth } : {}),
             }}>
             <div role="status" className="animate-pulse">
-              <div className="h-5 bg-gray-200 rounded-[4px] dark:bg-gray-400 w-[70%]"></div>
+              <div className="h-5 bg-gray-200 rounded-[4px] w-[70%]"></div>
             </div>
           </TableCell>
         );
@@ -96,7 +94,7 @@ export const Table = ({
             <TableCell
               key={column.id}
               align={column.align}
-              sx={cellSx}
+              sx={{ fontWeight: 600, ...cellSx }}
               style={{
                 ...(column.width ? { width: column.width } : {}),
                 ...(column.minWidth ? { minWidth: column.minWidth } : {}),
@@ -117,14 +115,14 @@ export const Table = ({
         <TableBody>
           {rows.map((row, rowIndex) => {
             return (
-              <TableRow sx={rowSx} key={rowIndex}>
+              <TableRow sx={rowSx} key={`${row}${rowIndex}`}>
                 {columns.map((column, columnIndex) => {
                   const value = row[column.id];
                   return (
                     <TableCell
                       {...column}
                       key={columnIndex}
-                      sx={cellSx}
+                      sx={{ fontWeight: 400, ...cellSx }}
                       align={column?.align}>
                       {column?.format
                         ? column.format(value)

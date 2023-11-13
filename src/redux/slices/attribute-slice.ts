@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IPayloadCreateAttribute } from '@/models/attribute.model';
+import {
+  IPayloadCreateAttribute,
+  IPayloadUpdateAttribute,
+} from '@/models/attribute.model';
 import { NetworkService } from '@/services/network-service';
 import { IPaginationParam } from '@/types/common-global.types';
 import { IAttributeState } from './types';
@@ -11,7 +14,7 @@ export const getListAttribute = createAsyncThunk(
   async (params: IPaginationParam, { rejectWithValue }) => {
     try {
       const { data } = await NetworkService.get('ATTRIBUTE', {
-        params,
+        params: { ...params, sortOrder: 'desc', sortBy: 'created_at' },
         isCms: true,
       });
       return data;
@@ -33,6 +36,54 @@ export const createAttribute = createAsyncThunk(
         },
       );
       return data;
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  },
+);
+
+export const updateAttribute = createAsyncThunk(
+  `${PREFIX_ATTRIBUTE_SLICE}/UPDATE`,
+  async (
+    { data, id }: { data: IPayloadUpdateAttribute; id: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const res = await NetworkService.patch('ATTRIBUTE', data, {
+        suffix: `/${id}`,
+        isCms: true,
+      });
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  },
+);
+
+export const getDetailAttribute = createAsyncThunk(
+  `${PREFIX_ATTRIBUTE_SLICE}/DETAIL`,
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const res = await NetworkService.get('ATTRIBUTE', {
+        suffix: `/${id}`,
+        isCms: true,
+      });
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  },
+);
+
+export const deleteAttribute = createAsyncThunk(
+  `${PREFIX_ATTRIBUTE_SLICE}/DELETE`,
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const res = await NetworkService.delete('ATTRIBUTE', {
+        suffix: `/${id}`,
+        isCms: true,
+      });
+      return res;
     } catch (error) {
       throw rejectWithValue(error);
     }

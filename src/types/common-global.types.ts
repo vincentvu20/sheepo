@@ -34,6 +34,7 @@ export interface IPaginationParam {
   pageSize?: number;
   sortOrder?: 'asc' | 'desc';
   sortBy?: string;
+  content?: string;
 }
 
 export interface IMessageResponse {

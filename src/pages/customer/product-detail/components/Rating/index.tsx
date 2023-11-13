@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { Button, Container, Select, TabPanel, Tabs } from '@/components';
 import { LIST_CARD_RATING } from './__mocks__/data';
 import { RatingCard } from './RatingCard';
+import { WriteReview } from '../WriteReview';
 
 export const RatingSection = () => {
   const [valueTab, setValueTab] = useState(1);
@@ -15,6 +16,8 @@ export const RatingSection = () => {
   const handleLoadMoreRating = () => {
     setCardRatingValue(cardRatingValue.concat(LIST_CARD_RATING));
   };
+
+  const [showReview, setShowReview] = useState<boolean>(false);
 
   const tabItems = ['Product Details', 'Rating & Reviews', 'FAQs'];
   return (
@@ -50,7 +53,8 @@ export const RatingSection = () => {
                     sx={{
                       textTransform: 'none',
                       paddingX: 5,
-                    }}>
+                    }}
+                    onClick={() => setShowReview(true)}>
                     Write a Review
                   </Button>
                 </div>
@@ -72,6 +76,11 @@ export const RatingSection = () => {
                   Load More Reviews
                 </Button>
               </div>
+              <WriteReview
+                isOpen={showReview}
+                onClose={() => setShowReview(false)}
+                star={4}
+              />
             </TabPanel>
           );
         }

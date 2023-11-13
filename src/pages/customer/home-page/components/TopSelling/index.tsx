@@ -9,9 +9,9 @@ export const TopSellingSection = () => {
     <Container>
       <TitleSection
         name="top selling"
-        className="mt-[64px] mb-[55px] uppercase flex justify-center items-center"
+        className="sm:mt-[72px] mt-10 sm:mb-[55px] mb-[32px] flex justify-center items-center"
       />
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="flex md:flex-wrap flex-nowrap sm:gap-5 gap-4 pb-3 overflow-x-auto">
         {LIST_CARD_PRODUCT.map((item, i) => (
           <CardProduct key={i} {...item} />
         ))}
@@ -19,7 +19,7 @@ export const TopSellingSection = () => {
       <div className="flex justify-center items-center mt-9 mb-[80px] leading-5">
         <Button
           variant="outlined"
-          className="w-[218px] !bg-white h-[52px] !border-white10 !border !rounded-[62px]">
+          className="sm:w-[218px] w-full !bg-white h-[52px] !border-white10 !border !rounded-[62px]">
           View All
         </Button>
       </div>

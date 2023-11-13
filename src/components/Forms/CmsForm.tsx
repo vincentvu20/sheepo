@@ -30,21 +30,22 @@ export const CmsForm = ({
             }}>
             <Input
               id="outlined-search"
-              placeholder="Tìm kiếm"
+              placeholder="Search"
               type="search"
               inputProps={{ 'aria-label': 'Tìm kiếm' }}
               renderLeadingIcon={<MagnifyingGlassIcon />}
               disableErrorMessage
-              contentContainerStyle="min-w-[300px]"
+              contentContainerStyle="min-w-[600px]"
               onChange={e => {
                 onSearch?.(e.target.value);
               }}
             />
             <Button
               onClick={onCreateNew}
-              variant="rounded-contained"
-              className="!min-w-[150px] h-12 !mx-6">
-              Create new
+              // variant="rounded-contained"
+              className="!min-w-[100px] h-10 !ml-6 !rounded-lg !shadow-none"
+              style={{ textTransform: 'none' }}>
+              Create
             </Button>
           </Box>
         </Stack>

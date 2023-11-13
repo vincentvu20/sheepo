@@ -1,7 +1,7 @@
-import Rating from '@mui/material/Rating';
+import Rating, { RatingProps } from '@mui/material/Rating';
 import { Box } from '@mui/system';
 
-interface RatingProps {
+interface RatingViewProps extends RatingProps {
   value: number;
 }
 
@@ -18,7 +18,7 @@ const labels: { [index: string]: string } = {
   5: '5.0/',
 };
 
-export const RatingView = ({ value }: RatingProps) => {
+export const RatingView = ({ value }: RatingViewProps) => {
   const MAX_POINT = 5;
 
   return (
@@ -27,7 +27,7 @@ export const RatingView = ({ value }: RatingProps) => {
         display: 'flex',
         alignItems: 'center',
       }}>
-      <Rating value={value} precision={0.5} readOnly />
+      <Rating value={value} precision={0.5} />
       {value !== null && (
         <Box sx={{ ml: 1 }}>
           <div className="flex font-normal text-sm">

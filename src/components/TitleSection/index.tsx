@@ -5,7 +5,7 @@ export interface TitleSectionProps {
 
 export const TitleSection = ({ name, className }: TitleSectionProps) => {
   return (
-    <div className="text-black text-5xl font-bold font-integralCF">
+    <div className="text-black text-3xl sm:text-5xl font-bold font-integralCF">
       <h1 className={className}>{name}</h1>
     </div>
   );

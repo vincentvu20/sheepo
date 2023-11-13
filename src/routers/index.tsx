@@ -50,20 +50,25 @@ export const Routers = createBrowserRouter(
           }}
         />
         <Route
-          index
-          element={<CartPageWeb />}
           handle={{
-            crumb: () => ({
-              href: 'cart',
-              name: 'Cart',
-              parentCrumb: {
+            crumb: () => {
+              return {
                 href: '/',
                 name: 'Home',
-              },
-            }),
-          }}
-          path="cart"
-        />
+              };
+            },
+          }}>
+          <Route
+            path="cart"
+            element={<CartPageWeb />}
+            handle={{
+              crumb: () => ({
+                href: 'cart',
+                name: 'Cart',
+              }),
+            }}
+          />
+        </Route>
       </Route>
 
       {/** ROUTERS FOR CMS */}

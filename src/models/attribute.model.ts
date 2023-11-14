@@ -12,3 +12,8 @@ export interface IAttribute {
 export interface IPayloadCreateAttribute {
   name: string;
 }
+
+export interface IPayloadUpdateAttribute {
+  name?: string;
+  status?: `${DefaultStatus}`;
+}

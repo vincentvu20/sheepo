@@ -10,6 +10,7 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
+import * as dayjs from 'dayjs';
 import { useDebounce } from 'use-debounce';
 import { schemaCreateCategoryCms } from '@/common';
 import { CmsForm, Column, Input, Table } from '@/components';
@@ -33,7 +34,6 @@ import {
   IErrorsProps,
   IUpdate,
 } from '@/types/common-global.types';
-import { DateUtils } from '@/utils/date.utils';
 
 export const CategoriesPage = () => {
   const dispatch = useAppDispatch();
@@ -271,7 +271,8 @@ export const CategoriesPage = () => {
       label: 'Created At',
       width: '15%',
       align: 'left',
-      render: (row: any) => DateUtils.formatString(row.created_at),
+      render: (row: any) =>
+        dayjs(new Date(row.created_at)).format('DD/MM/YYYY'),
     },
     {
       id: 'status',

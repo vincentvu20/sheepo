@@ -20,12 +20,26 @@ import {
 import {
   CartPage as CartPageWeb,
   HomePage as HomePageWeb,
+  LoginPage as LoginPageWeb,
   ProductDetailPage as ProductDetailPageWeb,
 } from '@/pages/customer';
 
 export const Routers = createBrowserRouter(
   createRoutesFromElements(
     <Route>
+      <Route
+        index
+        element={<LoginPageWeb />}
+        handle={{
+          crumb: () => {
+            return {
+              href: 'login',
+              name: 'Login',
+            };
+          },
+        }}
+        path="/login"
+      />
       {/** ROUTERS FOR WEB-CUSTOMER */}
       <Route path="/" element={<MainLayout />}>
         <Route
@@ -70,6 +84,19 @@ export const Routers = createBrowserRouter(
             }}
           />
         </Route>
+        <Route
+          index
+          element={<LoginPageWeb />}
+          handle={{
+            crumb: () => {
+              return {
+                href: 'login',
+                name: 'Login',
+              };
+            },
+          }}
+          path="login/:login"
+        />
       </Route>
 
       {/** ROUTERS FOR CMS */}

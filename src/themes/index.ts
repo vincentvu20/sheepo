@@ -129,7 +129,6 @@ export const theme = createTheme({
           fontWeight: 400,
           ':focus': {
             borderWidth: 0,
-            // border: '2px solid red',
           },
           '-internal-autofill-selecte': {
             borderWidth: 0,
@@ -141,6 +140,25 @@ export const theme = createTheme({
           borderColor: '#E0E3E7',
           border: '1px solid',
           position: 'relative',
+        },
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        selectLabel: {
+          borderWidth: 0,
+          fontWeight: 600,
+          fontSize: 20,
+        },
+        selectRoot: {
+          borderWidth: 0,
+          backgroundColor: 'transparent',
+          ':hover': {
+            backgroundColor: 'transparent',
+          },
+          ':focus': {
+            backgroundColor: 'transparent',
+          },
         },
       },
     },

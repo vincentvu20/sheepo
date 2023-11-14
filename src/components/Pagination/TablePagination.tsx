@@ -32,7 +32,13 @@ const TablePagination = ({
       page={page - 1 <= 0 ? 0 : page - 1}
       onPageChange={handleChange}
       rowsPerPage={rowsPerPage}
-      sx={sx}
+      sx={{
+        '& .MuiTablePagination-input': {
+          fontSize: 20,
+          fontWeight: 600,
+        },
+        ...sx,
+      }}
       {...others}
     />
   );

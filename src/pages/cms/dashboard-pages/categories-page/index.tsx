@@ -1,8 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, IconButton } from '@mui/material';
+import {
+  Box,
+  Chip,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from '@mui/material';
 import { useDebounce } from 'use-debounce';
 import { schemaCreateCategoryCms } from '@/common';
 import { CmsForm, Column, Input, Table } from '@/components';
@@ -15,12 +22,17 @@ import {
   updateCategory,
 } from '@/redux/slices';
 import { ModalServices } from '@/services/modal-service';
+import { colors } from '@/themes/colors';
 import {
   ICategory,
   ICreateCategory,
   IUpdateCategory,
 } from '@/types/category.types';
-import { IErrorsProps, IUpdate } from '@/types/common-global.types';
+import {
+  DefaultStatus,
+  IErrorsProps,
+  IUpdate,
+} from '@/types/common-global.types';
 import { DateUtils } from '@/utils/date.utils';
 
 export const CategoriesPage = () => {
@@ -33,6 +45,19 @@ export const CategoriesPage = () => {
   const [totalCategory, setTotalCategory] = useState<number>(0);
   const [searchStr, setSearchStr] = useState<string>('');
   const [debounceContent] = useDebounce(searchStr, 500);
+  const [anchorElStatus, setAnchorElStatus] = useState<{
+    [key: string]: HTMLElement;
+  } | null>(null);
+
+  const handleClickStatus = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    id: string,
+  ) => {
+    setAnchorElStatus({ [id]: event.target } as any);
+  };
+  const handleCloseMenuStatus = () => {
+    setAnchorElStatus(null);
+  };
 
   const createCategoryForm = useForm({
     shouldUseNativeValidation: true,
@@ -51,7 +76,7 @@ export const CategoriesPage = () => {
           page,
           pageSize,
           content: debounceContent ? debounceContent : undefined,
-          sortBy: 'created_at',
+          sortBy: 'updated_at',
           sortOrder: 'desc',
         }),
       ).unwrap();
@@ -114,6 +139,34 @@ export const CategoriesPage = () => {
     }
   };
 
+  const handleChangeStatus = ({
+    status,
+    data,
+  }: {
+    status: DefaultStatus;
+    data: any;
+  }) => {
+    return async () => {
+      setAnchorElStatus(null);
+      try {
+        await dispatch(
+          updateCategory({
+            data: { name: data.name, status },
+            id: data.id,
+          }),
+        ).unwrap();
+        await fetchCategoryList();
+        ModalServices.showMessageSuccess({
+          message: 'Update status successfully',
+        });
+      } catch (error) {
+        ModalServices.showMessageError({
+          message: 'Update status failed',
+        });
+      }
+    };
+  };
+
   useEffect(() => {
     fetchCategoryList();
   }, [fetchCategoryList]);
@@ -164,7 +217,7 @@ export const CategoriesPage = () => {
   const handleClickEdit = (id: number) => {
     return async () => {
       try {
-        const data = await dispatch(getDetailCategory(id)).unwrap();
+        const category = await dispatch(getDetailCategory(id)).unwrap();
         editCategoryForm.setValue('id', id);
         const detailForm = (
           <div className=" flex flex-1 flex-col justify-between pr-7 pl-7">
@@ -173,17 +226,9 @@ export const CategoriesPage = () => {
                 placeholder="Name"
                 label="Name"
                 required
-                defaultValue={data?.name}
+                defaultValue={category?.name}
                 register={editCategoryForm.register}
                 name="data.name"
-              />
-              <Input
-                placeholder="Status"
-                label="Status"
-                defaultValue={data?.status}
-                required
-                register={editCategoryForm.register}
-                name="data.status"
               />
             </div>
           </div>
@@ -196,7 +241,10 @@ export const CategoriesPage = () => {
           loading: isLoading,
           title: 'Category',
           submitTitle: 'Submit',
-          onConfirm: editCategoryForm.handleSubmit(handleUpdate),
+          onConfirm: editCategoryForm.handleSubmit(data => {
+            data.data.status = category.status;
+            return handleUpdate(data);
+          }),
           onCancel: editCategoryForm.reset,
           children: detailForm,
         });
@@ -230,6 +278,52 @@ export const CategoriesPage = () => {
       label: 'Status',
       width: '15%',
       align: 'left',
+      render: (row: any) => {
+        return (
+          <div>
+            <button
+              onClick={(e: any) => handleClickStatus(e, row.id)}
+              id="basic-button"
+              aria-controls={
+                anchorElStatus?.[row.id] ? 'basic-menu' : undefined
+              }
+              aria-haspopup="true"
+              aria-expanded={anchorElStatus?.[row.id] ? 'true' : undefined}>
+              <Chip
+                sx={{ textTransform: 'capitalize' }}
+                label={row.status}
+                color={
+                  row.status === DefaultStatus.Active ? 'success' : 'error'
+                }
+              />
+            </button>
+            <Menu
+              elevation={1}
+              id={row.id}
+              anchorEl={anchorElStatus?.[row.id]}
+              open={!!anchorElStatus?.[row.id]}
+              onClose={handleCloseMenuStatus}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}>
+              <MenuItem
+                onClick={handleChangeStatus({
+                  status: DefaultStatus.Active,
+                  data: row,
+                })}>
+                <Typography color={colors.success}>Active</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={handleChangeStatus({
+                  status: DefaultStatus.Inactive,
+                  data: row,
+                })}>
+                <Typography color={colors.error}>Inactive</Typography>
+              </MenuItem>
+            </Menu>
+          </div>
+        );
+      },
     },
     {
       id: 'action',

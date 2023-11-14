@@ -130,9 +130,9 @@ export const theme = createTheme({
           ':focus': {
             borderWidth: 0,
           },
-          '-internal-autofill-selecte': {
-            borderWidth: 0,
-          },
+          // '-internal-autofill-select': {
+          //   borderWidth: 0,
+          // },
         },
         root: {
           borderRadius: 100,

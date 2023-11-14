@@ -1,4 +1,10 @@
-import { Box, DialogContent, Typography } from '@mui/material';
+import {
+  Box,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import { IConfirmModalProps } from '@/models/modal.model';
 import { ModalServices } from '@/services/modal-service';
 import { Button } from '..';
@@ -22,14 +28,13 @@ export const ConfirmModal = ({
     ModalServices.hideModal?.();
   };
   return (
-    <Box sx={{ minWidth: 600, paddingX: '40px', paddingY: '50px' }}>
-      {/* <DialogTitle>{title}</DialogTitle> */}
-      <div className="flex justify-between">
-        <p>{title}</p>
-        <button type="button" onClick={handleClose}>
+    <Box sx={{ minWidth: 500, zIndex: 1000000 }}>
+      <Box className="flex justify-between">
+        <DialogTitle>{title}</DialogTitle>
+        <IconButton onClick={handleClose}>
           <CloseIcon />
-        </button>
-      </div>
+        </IconButton>
+      </Box>
       <DialogContent className="!px-0">
         <Typography>{message}</Typography>
         <Box

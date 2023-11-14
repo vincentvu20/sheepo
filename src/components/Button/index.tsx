@@ -44,6 +44,7 @@ export const Button = ({
   return (
     <MUIButton
       type="button"
+      style={{ textTransform: 'capitalize' }}
       variant={defaultStyleByVariant[variant].variant}
       className={clsx(defaultStyleByVariant[variant].className, className)}
       {...other}

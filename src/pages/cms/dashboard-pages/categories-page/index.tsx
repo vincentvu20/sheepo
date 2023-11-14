@@ -25,7 +25,7 @@ export const CategoriesPage = () => {
   const [totalItem, setTotalItem] = useState<number>(0);
   const [searchStr, setSearchStr] = useState<string>('');
   const [debounceContent] = useDebounce(searchStr, 500);
-  const [_, setId] = useState<number>();
+  // const [_, setId] = useState<number>();
   // const [category, setCategory] = useState<ICategory>();
   const [showModal, setShowModal] = useState<boolean>(false);
 

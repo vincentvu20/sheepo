@@ -26,6 +26,7 @@ const ModalPortalBase = () => {
       open={isVisible}
       TransitionComponent={Transition}
       keepMounted
+      sx={{ zIndex: 10000 }}
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description">
       <>{content}</>

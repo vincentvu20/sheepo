@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { Box, CircularProgress, Grid, Stack, Typography } from '@mui/material';
-import DialogFormCategory from '@/pages/cms/dashboard-pages/categories-page/components/DialogFormCategories';
 import { Breadcrumbs, Button, Input } from '..';
 
 export const CmsForm = ({
@@ -9,6 +8,7 @@ export const CmsForm = ({
   onSearch,
   isLoading,
   children,
+  onCreateNew,
 }: {
   title: string;
   onCreateNew?: () => void;
@@ -16,8 +16,6 @@ export const CmsForm = ({
   isLoading?: boolean;
   children?: React.ReactNode;
 }) => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-
   return (
     <>
       <Grid item sm={12} lg={12}>
@@ -37,25 +35,21 @@ export const CmsForm = ({
               inputProps={{ 'aria-label': 'Tìm kiếm' }}
               renderLeadingIcon={<MagnifyingGlassIcon />}
               disableErrorMessage
-              contentContainerStyle="min-w-[600px]"
+              contentContainerStyle="min-w-[300px]"
               onChange={e => {
                 onSearch?.(e.target.value);
               }}
             />
             <Button
-              onClick={() => setShowModal(true)}
-              className="!min-w-[100px] h-10 !ml-6 !rounded-lg !shadow-none"
-              style={{ textTransform: 'none' }}>
+              onClick={onCreateNew}
+              variant="rounded-contained"
+              className="!min-w-[100px] h-12 !mx-6"
+              style={{ textTransform: 'capitalize' }}>
               Create
             </Button>
           </Box>
         </Stack>
       </Grid>
-      <DialogFormCategory
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        type="create"
-      />
       {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
           <CircularProgress />

@@ -128,7 +128,7 @@ export const Input = ({
       ) : errorMessage ? (
         <Typography sx={{ color: colors.error }}>{errorMessage}</Typography>
       ) : (
-        <div className="h-[22px]"></div>
+        <div className="h-[22px]" />
       )}
     </div>
   );

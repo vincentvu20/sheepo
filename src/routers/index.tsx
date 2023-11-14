@@ -17,6 +17,7 @@ import {
   UsersPage,
 } from '@/pages/cms';
 import {
+  CartPage as CartPageWeb,
   HomePage as HomePageWeb,
   ProductDetailPage as ProductDetailPageWeb,
 } from '@/pages/customer';
@@ -48,6 +49,26 @@ export const Routers = createBrowserRouter(
             }),
           }}
         />
+        <Route
+          handle={{
+            crumb: () => {
+              return {
+                href: '/',
+                name: 'Home',
+              };
+            },
+          }}>
+          <Route
+            path="cart"
+            element={<CartPageWeb />}
+            handle={{
+              crumb: () => ({
+                href: 'cart',
+                name: 'Cart',
+              }),
+            }}
+          />
+        </Route>
       </Route>
 
       {/** ROUTERS FOR CMS */}

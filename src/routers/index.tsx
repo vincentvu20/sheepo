@@ -12,6 +12,7 @@ import {
   AttributesPage,
   BookingsPage,
   CategoriesPage,
+  DashboardPage,
   LoginPage,
   ProductsPage,
   UsersPage,
@@ -84,6 +85,16 @@ export const Routers = createBrowserRouter(
               };
             },
           }}>
+          <Route
+            path="dashboard"
+            element={<DashboardPage />}
+            // handle={{
+            //   crumb: () => ({
+            //     href: 'users',
+            //     name: 'Users',
+            //   }),
+            // }}
+          />
           <Route
             path="users"
             element={<UsersPage />}

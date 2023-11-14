@@ -6,7 +6,7 @@ export const RedirectLayout = () => {
   const { accessTokenCms } = useAppSelector(state => state.auth);
   return (
     <Navigate
-      to={!accessTokenCms ? ROUTES_CMS.LOGIN : ROUTES_CMS.USERS}
+      to={!accessTokenCms ? ROUTES_CMS.LOGIN : ROUTES_CMS.DASHBOARD}
       replace
     />
   );

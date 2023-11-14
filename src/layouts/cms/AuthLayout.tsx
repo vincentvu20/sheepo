@@ -8,7 +8,7 @@ export const AuthLayout = () => {
   const { accessTokenCms } = useAppSelector(state => state.auth);
   const checkLogged = useCallback(() => {
     if (accessTokenCms) {
-      navigate(ROUTES_CMS.DASHBOARD, { replace: true });
+      navigate(ROUTES_CMS.HOME, { replace: true });
     }
   }, [accessTokenCms, navigate]);
 

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import {
+  ChartBarIcon,
   ShoppingBagIcon,
   ShoppingCartIcon,
   SwatchIcon,
@@ -27,6 +28,11 @@ import Header from './Header';
 const drawerWidth = 300;
 
 const DrawerData = [
+  {
+    label: 'Dashboard',
+    icons: <ChartBarIcon height={24} width={24} color="black" />,
+    path: ROUTES_CMS.DASHBOARD,
+  },
   {
     label: 'Users',
     icons: <UsersIcon height={24} width={24} color="black" />,

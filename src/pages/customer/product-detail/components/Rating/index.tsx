@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Box } from '@mui/material';
 import { Button, Container, Select, TabPanel, Tabs } from '@/components';
+import { WriteReview } from '../WriteReview';
 import { LIST_CARD_RATING } from './__mocks__/data';
 import { RatingCard } from './RatingCard';
-import { WriteReview } from '../WriteReview';
 
 export const RatingSection = () => {
   const [valueTab, setValueTab] = useState(1);

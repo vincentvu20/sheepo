@@ -12,7 +12,7 @@ export const CartPage = () => {
 
   useEffect(() => {
     dispatch(setCart(LIST_CART));
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="max-w-[1440px] mx-auto font-santoshi p-2 md:p-3">

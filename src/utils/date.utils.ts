@@ -1,4 +1,4 @@
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 export class DateUtils {
   static formatString(date: Date, format = 'DD/MM/YYYY') {

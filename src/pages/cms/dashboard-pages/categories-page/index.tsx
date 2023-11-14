@@ -10,7 +10,7 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { useDebounce } from 'use-debounce';
 import { schemaCreateCategoryCms } from '@/common';
 import { CmsForm, Column, Input, Table } from '@/components';

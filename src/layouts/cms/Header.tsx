@@ -13,10 +13,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import { useTheme } from '@/hooks/common-hook';
+import { useAppSelector, useTheme } from '@/hooks/common-hook';
 
 function Header({ onLogout, onRedirectProfile, ...other }: any) {
   const { colors } = useTheme();
+  const { profile } = useAppSelector(state => state.auth);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
@@ -60,7 +61,7 @@ function Header({ onLogout, onRedirectProfile, ...other }: any) {
                 <div className="flex flex-col items-end justify-center">
                   <Typography variant="body2">Super Admin</Typography>
                   <Typography variant="subtitle1">
-                    super_admin@sheepo.com
+                    {profile?.email || 'super_admin@sheepo.com'}
                   </Typography>
                 </div>
                 <IconButton

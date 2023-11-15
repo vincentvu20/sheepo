@@ -3,6 +3,7 @@ import { IAttribute } from '@/models/attribute.model';
 export interface IAuthState {
   accessToken?: string;
   accessTokenCms?: string;
+  profile?: any;
 }
 
 export interface IModalState {

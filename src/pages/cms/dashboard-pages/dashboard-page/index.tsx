@@ -22,7 +22,7 @@ export const DashboardPage = () => {
         Hi, Welcome back 👋
       </Typography>
       <Grid container spacing={4} marginTop="30px">
-        <Grid item xs={3}>
+        <Grid item xs={6} lg={3}>
           <Item>
             <img
               src="../ic_glass_bag.png"
@@ -46,7 +46,7 @@ export const DashboardPage = () => {
             </Box>
           </Item>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} lg={3}>
           <Item>
             <img
               src="../ic_glass_users.png"
@@ -70,7 +70,7 @@ export const DashboardPage = () => {
             </Box>
           </Item>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} lg={3}>
           <Item>
             <img
               src="../ic_glass_buy.png"
@@ -94,7 +94,7 @@ export const DashboardPage = () => {
             </Box>
           </Item>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} lg={3}>
           <Item>
             <img
               src="../ic_glass_message.png"
@@ -120,7 +120,7 @@ export const DashboardPage = () => {
         </Grid>
       </Grid>
       <Grid container spacing={4} marginTop="30px">
-        <Grid item xs={6}>
+        <Grid item xs={12} lg={6}>
           <Item sx={{ height: 500 }}>
             <Box
               sx={{
@@ -322,7 +322,7 @@ export const DashboardPage = () => {
             </Box>
           </Item>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} lg={6}>
           <Item sx={{ height: 500 }}>
             <Box
               sx={{

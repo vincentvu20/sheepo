@@ -49,7 +49,7 @@ export const theme = createTheme({
       lineHeight: 'normal',
     },
     body1: {
-      fontSize: 24,
+      fontSize: 18,
       fontWeight: 700,
       fontFamily: 'Satoshi',
       fontStyle: 'normal',
@@ -57,6 +57,13 @@ export const theme = createTheme({
     },
     body2: {
       fontSize: 20,
+      fontWeight: 700,
+      fontFamily: 'Satoshi',
+      fontStyle: 'normal',
+      lineHeight: 'normal',
+    },
+    body3: {
+      fontSize: 24,
       fontWeight: 700,
       fontFamily: 'Satoshi',
       fontStyle: 'normal',

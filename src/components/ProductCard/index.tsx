@@ -26,8 +26,8 @@ export const ProductCard = ({
         <RatingView value={star} />
         <div className="flex items-center mt-2 gap-[10px]">
           <Typography variant="body2">{price}</Typography>
-          <Typography variant="body1">{cost}</Typography>
-          <Typography variant="body1">{sale}</Typography>
+          <Typography variant={'body3' as 'body1'}>{cost}</Typography>
+          <Typography variant={'body3' as 'body1'}>{sale}</Typography>
         </div>
       </CardContent>
     </Card>

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import jwtDecode from 'jwt-decode';
 import { ILogin, UserType } from '@/models/authentication.model';
 import { NetworkService } from '@/services/network-service';
 import { IAuthState } from './types';
@@ -43,6 +44,7 @@ export const login = createAsyncThunk(
 const initialState = {
   accessToken: undefined,
   accessTokenCms: undefined,
+  profile: undefined,
 } as IAuthState;
 
 const authSlice = createSlice({
@@ -62,6 +64,7 @@ const authSlice = createSlice({
       if (action?.payload && action?.payload?.accessToken) {
         if (action.payload.type === UserType.Admin) {
           state.accessTokenCms = action.payload.accessToken;
+          state.profile = jwtDecode(action.payload.accessToken);
         }
       }
     });

@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { XMarkIcon } from '@heroicons/react/20/solid';
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
+import {
+  ChevronDownIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
@@ -209,6 +213,13 @@ export const AttributesPage = () => {
       label: 'Type',
       width: '10%',
       align: 'center',
+      render: (row: any) => {
+        return (
+          <Typography sx={{ textTransform: 'capitalize' }}>
+            {row?.type}
+          </Typography>
+        );
+      },
     },
     {
       id: 'status',
@@ -218,22 +229,13 @@ export const AttributesPage = () => {
       render: (row: any) => {
         return (
           <div>
-            <button
-              onClick={(e: any) => handleClickStatus(e, row.id)}
-              id="basic-button"
-              aria-controls={
-                anchorElStatus?.[row.id] ? 'basic-menu' : undefined
-              }
-              aria-haspopup="true"
-              aria-expanded={anchorElStatus?.[row.id] ? 'true' : undefined}>
-              <Chip
-                sx={{ textTransform: 'capitalize' }}
-                label={row.status}
-                color={
-                  row.status === DefaultStatus.Active ? 'success' : 'error'
-                }
-              />
-            </button>
+            <Chip
+              deleteIcon={<ChevronDownIcon height={16} width={16} />}
+              onDelete={(e: any) => handleClickStatus(e, row.id)}
+              sx={{ textTransform: 'capitalize' }}
+              label={row.status}
+              color={row.status === DefaultStatus.Active ? 'success' : 'error'}
+            />
             <Menu
               elevation={1}
               id={row.id}

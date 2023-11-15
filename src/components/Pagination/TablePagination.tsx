@@ -34,8 +34,15 @@ const TablePagination = ({
       rowsPerPage={rowsPerPage}
       sx={{
         '& .MuiTablePagination-input': {
-          fontSize: 20,
-          fontWeight: 600,
+          fontSize: 24,
+        },
+        '& .MuiTablePagination-selectLabel': {
+          fontSize: 18,
+          fontWeight: 400,
+        },
+        '& .MuiTablePagination-displayedRows': {
+          fontSize: 18,
+          fontWeight: 400,
         },
         ...sx,
       }}

@@ -162,5 +162,10 @@ export const theme = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      input: {
+        padding: '12px 16px',
+      },
+    },
   },
 } as ThemeOptions & { colors: IColorType });

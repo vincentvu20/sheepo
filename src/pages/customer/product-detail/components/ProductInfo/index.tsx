@@ -32,6 +32,7 @@ export const ProductInfoSection = () => {
   const [radioButtonValue, setRadioButtonValue] = useState('1');
   const [product, setProduct] = useState<IProduct>(dataProductDefault);
   const [productQuantity, setProductQuantity] = useState(0);
+  const [mainImageSrc, setMainImageSrc] = useState<string>('/tshirt2big.png');
 
   const fetchDetailProduct = useCallback(async () => {
     try {
@@ -64,6 +65,9 @@ export const ProductInfoSection = () => {
       productQuantity === 0 ? productQuantity : productQuantity - 1,
     );
   };
+  const handleClickImage = (src: string) => {
+    setMainImageSrc(src);
+  };
 
   return (
     <Container>
@@ -77,21 +81,24 @@ export const ProductInfoSection = () => {
               src={product?.images[0]}
               alt="product_image"
               className="bg-snowFlake w-full rounded-[20px]"
+              onClick={_event => handleClickImage(product?.images[0])}
             />
             <img
               src={product?.images[1]}
               alt="product_image"
               className="bg-snowFlake w-full rounded-[20px]"
+              onClick={_event => handleClickImage(product?.images[1])}
             />
             <img
               src={product?.images[2]}
               alt="product_image"
               className="bg-snowFlake w-full rounded-[20px]"
+              onClick={_event => handleClickImage(product?.images[2])}
             />
           </div>
-          <div className="bg-snowFlake max-w-[444px] rounded-[20px]">
+          <div className="bg-snowFlake w-[444px] rounded-[20px] max-sm:w-[358px]">
             <img
-              src="/tshirt2big.png"
+              src={mainImageSrc}
               alt="product_image"
               className="bg-snowFlake w-full rounded-[20px]"
             />

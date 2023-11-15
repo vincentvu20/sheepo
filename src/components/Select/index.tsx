@@ -37,7 +37,6 @@ export const Select = ({
 
   return (
     <MUISelect
-      variant="standard"
       id="select"
       value={defaultLabel}
       onChange={handleChange}
@@ -45,8 +44,8 @@ export const Select = ({
       sx={{
         backgroundColor: '#F0F0F0',
         color: '#000000',
-        borderRadius: '62px',
         border: 0,
+        borderRadius: '62px',
         '&:before': {
           borderBottom: '0px',
         },
@@ -54,7 +53,6 @@ export const Select = ({
           borderBottom: '0px',
         },
         textAlign: 'center',
-        justifyContent: 'center',
         padding: 0,
         minWidth: 150,
         ...sx,

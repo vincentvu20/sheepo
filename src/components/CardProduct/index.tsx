@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { RatingView } from '../Rating';
 
 interface CardProductProps {
@@ -26,9 +27,11 @@ export const CardProduct = ({
           className="rounded-[20px] cursor-pointer"
         />
       </div>
-      <h3 className="mt-4 mb-2 text-base sm:text-xl font-bold font-santoshi cursor-pointer text-black">
-        {name}
-      </h3>
+      <Link to={'/products/' + '123'}>
+        <h3 className="mt-4 mb-2 text-base sm:text-xl font-bold font-santoshi cursor-pointer text-black">
+          {name}
+        </h3>
+      </Link>
       <RatingView value={star} readOnly />
       <div className="flex items-center mt-2">
         <p className="text-xl sm:text-2xl font-bold text-black mr-[10px] h-8">

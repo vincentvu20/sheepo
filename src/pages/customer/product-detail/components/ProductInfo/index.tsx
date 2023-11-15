@@ -73,15 +73,21 @@ export const ProductInfoSection = () => {
       <div className="flex gap-4 flex-wrap">
         <div className="flex gap-3 flex-row flex-wrap-reverse">
           <div className="w-[152px] flex flex-col gap-4 max-sm:flex-row max-sm:w-[111px] max-sm:gap-2">
-            {product?.images?.map(item => {
-              return (
-                <img
-                  src={item}
-                  alt="product_image"
-                  className="bg-snowFlake w-full rounded-[20px]"
-                />
-              );
-            })}
+            <img
+              src={product?.images[0]}
+              alt="product_image"
+              className="bg-snowFlake w-full rounded-[20px]"
+            />
+            <img
+              src={product?.images[1]}
+              alt="product_image"
+              className="bg-snowFlake w-full rounded-[20px]"
+            />
+            <img
+              src={product?.images[2]}
+              alt="product_image"
+              className="bg-snowFlake w-full rounded-[20px]"
+            />
           </div>
           <div className="bg-snowFlake max-w-[444px] rounded-[20px]">
             <img
@@ -205,7 +211,6 @@ export const ProductInfoSection = () => {
             <Button
               variant="rounded-contained"
               sx={{
-                textTransform: 'none',
                 width: '100%',
               }}>
               Add to Cart

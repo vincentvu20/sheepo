@@ -15,6 +15,7 @@ type IButtonProps = {
 export const Button = ({
   variant = 'rounded-contained',
   className,
+  sx,
   ...other
 }: IButtonProps) => {
   const defaultStyleByVariant = useMemo<{
@@ -47,6 +48,10 @@ export const Button = ({
       style={{ textTransform: 'capitalize' }}
       variant={defaultStyleByVariant[variant].variant}
       className={clsx(defaultStyleByVariant[variant].className, className)}
+      sx={{
+        textTransform: 'none',
+        ...sx,
+      }}
       {...other}
     />
   );

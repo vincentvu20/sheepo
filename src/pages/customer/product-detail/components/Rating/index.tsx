@@ -5,6 +5,8 @@ import { WriteReview } from '../WriteReview';
 import { LIST_CARD_RATING } from './__mocks__/data';
 import { RatingCard } from './RatingCard';
 
+const allReviewMock = 50;
+
 export const RatingSection = () => {
   const [valueTab, setValueTab] = useState(1);
   const [cardRatingValue, setCardRatingValue] = useState(LIST_CARD_RATING);
@@ -36,9 +38,7 @@ export const RatingSection = () => {
               <div className="flex">
                 <div className="flex items-center gap-2 grow-[2]">
                   <h1 className="font-bold text-2xl">All Reviews</h1>
-                  <h1 className="text-base text-black60">
-                    ( {cardRatingValue.length})
-                  </h1>
+                  <h1 className="text-base text-black60">({allReviewMock})</h1>
                 </div>
                 <div className="flex items-center gap-2 grow-[8] justify-end">
                   <Select
@@ -51,7 +51,6 @@ export const RatingSection = () => {
                   <Button
                     variant="rounded-contained"
                     sx={{
-                      textTransform: 'none',
                       paddingX: 5,
                     }}
                     onClick={() => setShowReview(true)}>
@@ -65,16 +64,18 @@ export const RatingSection = () => {
                 ))}
               </div>
               <div className="flex justify-center items-center mt-9 leading-5">
-                <Button
-                  variant="rounded-outlined"
-                  className="w-[218px] !bg-white h-[52px] !border-white10 !border !rounded-[62px]"
-                  sx={{
-                    textTransform: 'none',
-                    fontWeight: 'bold',
-                  }}
-                  onClick={handleLoadMoreRating}>
-                  Load More Reviews
-                </Button>
+                {cardRatingValue.length > 6 &&
+                  cardRatingValue.length < allReviewMock && (
+                    <Button
+                      variant="rounded-outlined"
+                      className="w-[218px] !bg-white h-[52px] !border-white10 !border !rounded-[62px]"
+                      sx={{
+                        fontWeight: 'bold',
+                      }}
+                      onClick={handleLoadMoreRating}>
+                      Load More Reviews
+                    </Button>
+                  )}
               </div>
               <WriteReview
                 isOpen={showReview}

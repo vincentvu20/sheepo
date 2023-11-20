@@ -29,10 +29,11 @@ const dataProductDefault = {
 export const ProductInfoSection = () => {
   const dispatch = useAppDispatch();
   const { productId } = useParams();
-  const [radioButtonValue, setRadioButtonValue] = useState('1');
+  const [radioButtonValue, setRadioButtonValue] = useState<string>('pink');
   const [product, setProduct] = useState<IProduct>(dataProductDefault);
-  const [productQuantity, setProductQuantity] = useState(0);
-  const [mainImageSrc, setMainImageSrc] = useState<string>('/tshirt2big.png');
+  const [productQuantity, setProductQuantity] = useState<number>(0);
+  const [mainImageSrc, setMainImageSrc] = useState<string>(product?.images[0]);
+  const [borderImage, setBorderImage] = useState<number>(0);
 
   const fetchDetailProduct = useCallback(async () => {
     try {
@@ -40,7 +41,7 @@ export const ProductInfoSection = () => {
         getDetailProduct(Number(productId)),
       ).unwrap();
 
-      const dataProduct = data ? data : dataProductDefault;
+      const dataProduct = data ?? dataProductDefault;
       setProduct(dataProduct as IProduct);
     } catch (error: any) {
       ModalServices.showMessageError({ message: error.message });
@@ -57,16 +58,17 @@ export const ProductInfoSection = () => {
     setRadioButtonValue(event.target.value);
   };
 
-  const handlePlusQuantity = () => {
+  const handleIncreaseQuantity = () => {
     setProductQuantity(productQuantity + 1);
   };
-  const handleMinusQuantity = () => {
-    setProductQuantity(
-      productQuantity === 0 ? productQuantity : productQuantity - 1,
-    );
+  const handleReduceQuantity = () => {
+    if (productQuantity > 0) {
+      setProductQuantity(productQuantity - 1);
+    }
   };
-  const handleClickImage = (src: string) => {
+  const handleClickImage = (src: string, imagePosition: number) => {
     setMainImageSrc(src);
+    setBorderImage(imagePosition);
   };
 
   return (
@@ -80,27 +82,36 @@ export const ProductInfoSection = () => {
             <img
               src={product?.images[0]}
               alt="product_image"
-              className="bg-snowFlake w-full rounded-[20px]"
-              onClick={_event => handleClickImage(product?.images[0])}
+              className={
+                'w-full rounded-[20px] cursor-pointer h-[167px] object-cover border-black ' +
+                (borderImage === 0 ? 'border' : '')
+              }
+              onClick={_event => handleClickImage(product?.images[0], 0)}
             />
             <img
               src={product?.images[1]}
               alt="product_image"
-              className="bg-snowFlake w-full rounded-[20px]"
-              onClick={_event => handleClickImage(product?.images[1])}
+              className={
+                'w-full rounded-[20px] cursor-pointer h-[167px] object-cover border-black ' +
+                (borderImage === 1 ? 'border' : '')
+              }
+              onClick={_event => handleClickImage(product?.images[1], 1)}
             />
             <img
               src={product?.images[2]}
               alt="product_image"
-              className="bg-snowFlake w-full rounded-[20px]"
-              onClick={_event => handleClickImage(product?.images[2])}
+              className={
+                'w-full rounded-[20px] cursor-pointer h-[167px] object-cover border-black ' +
+                (borderImage === 2 ? 'border' : '')
+              }
+              onClick={_event => handleClickImage(product?.images[2], 2)}
             />
           </div>
-          <div className="bg-snowFlake w-[444px] rounded-[20px] max-sm:w-[358px]">
+          <div className="w-[444px] rounded-[20px] max-sm:w-[358px]">
             <img
               src={mainImageSrc}
               alt="product_image"
-              className="bg-snowFlake w-full rounded-[20px]"
+              className="w-full rounded-[20px] h-[530px] object-cover"
             />
           </div>
         </div>
@@ -134,9 +145,9 @@ export const ProductInfoSection = () => {
                 },
                 '& .MuiSvgIcon-root': { fontSize: 38 },
               }}
-              value="1"
+              value="pink"
               onChange={handleRadioButtonChange}
-              checked={radioButtonValue === '1'}
+              checked={radioButtonValue === 'pink'}
             />
             <RadioButton
               sx={{
@@ -146,9 +157,9 @@ export const ProductInfoSection = () => {
                 },
                 '& .MuiSvgIcon-root': { fontSize: 38 },
               }}
-              value="2"
+              value="yellow"
               onChange={handleRadioButtonChange}
-              checked={radioButtonValue === '2'}
+              checked={radioButtonValue === 'yellow'}
             />
             <RadioButton
               sx={{
@@ -158,9 +169,9 @@ export const ProductInfoSection = () => {
                 },
                 '& .MuiSvgIcon-root': { fontSize: 38 },
               }}
-              value="3"
+              value="green"
               onChange={handleRadioButtonChange}
-              checked={radioButtonValue === '3'}
+              checked={radioButtonValue === 'green'}
             />
           </div>
           <div className="border border-black10"></div>
@@ -170,22 +181,22 @@ export const ProductInfoSection = () => {
           <div className="text-[16px] font-santoshi text-black60">
             <button
               type="button"
-              className="py-2.5 px-5 mr-2 mb-2 bg-snowFlake rounded-[62px] hover:bg-black hover:text-white focus:bg-black focus:text-white">
+              className="py-2.5 px-5 mr-2 mb-2 bg-snowFlake rounded-[62px] hover:bg-black hover:text-white focus:bg-black focus:text-white transition-all duration-500">
               Small
             </button>
             <button
               type="button"
-              className="py-2.5 px-5 mr-2 mb-2 bg-snowFlake rounded-[62px] hover:bg-black hover:text-white focus:bg-black focus:text-white">
+              className="py-2.5 px-5 mr-2 mb-2 bg-snowFlake rounded-[62px] hover:bg-black hover:text-white focus:bg-black focus:text-white transition-all duration-500">
               Medium
             </button>
             <button
               type="button"
-              className="py-2.5 px-5 mr-2 mb-2 bg-snowFlake rounded-[62px] hover:bg-black hover:text-white focus:bg-black focus:text-white">
+              className="py-2.5 px-5 mr-2 mb-2 bg-snowFlake rounded-[62px] hover:bg-black hover:text-white focus:bg-black focus:text-white transition-all duration-500">
               Large
             </button>
             <button
               type="button"
-              className="py-2.5 px-5 mr-2 mb-2 bg-snowFlake rounded-[62px] hover:bg-black hover:text-white focus:bg-black focus:text-white">
+              className="py-2.5 px-5 mr-2 mb-2 bg-snowFlake rounded-[62px] hover:bg-black hover:text-white focus:bg-black focus:text-white transition-all duration-500">
               X-Large
             </button>
           </div>
@@ -198,7 +209,7 @@ export const ProductInfoSection = () => {
                   textTransform: 'none',
                   width: '100%',
                 }}
-                onClick={handleMinusQuantity}>
+                onClick={handleReduceQuantity}>
                 <MinusIcon />
               </Button>
 
@@ -211,7 +222,7 @@ export const ProductInfoSection = () => {
                   textTransform: 'none',
                   width: '100%',
                 }}
-                onClick={handlePlusQuantity}>
+                onClick={handleIncreaseQuantity}>
                 <PlusIcon />
               </Button>
             </div>

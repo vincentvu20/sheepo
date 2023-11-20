@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import jwtDecode from 'jwt-decode';
 import { ILogin, ISignup, UserType } from '@/models/authentication.model';
 import { NetworkService } from '@/services/network-service';
 import { IAuthState } from './types';

@@ -84,19 +84,6 @@ export const Routers = createBrowserRouter(
             }}
           />
         </Route>
-        <Route
-          index
-          element={<LoginPageWeb />}
-          handle={{
-            crumb: () => {
-              return {
-                href: 'login',
-                name: 'Login',
-              };
-            },
-          }}
-          path="login/:login"
-        />
       </Route>
 
       {/** ROUTERS FOR CMS */}

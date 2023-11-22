@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useMediaQuery } from '@mui/material';
@@ -13,6 +14,7 @@ export const Header = () => {
   const [open, toggle] = useToggle();
   const [search, setSearch] = useState('');
   const isSupperSmallScreen = useMediaQuery('(max-width: 320px)');
+  const navigate = useNavigate();
   const [, setOpenMenu] = useState<boolean>(false);
 
   const handleClearSearch = () => {
@@ -73,7 +75,9 @@ export const Header = () => {
             <div className="flex justify-center items-center text-black mr-3 lg:hidden">
               <SearchIcon fillOpacity={1} />
             </div>
-            <ShoppingCartOutlinedIcon className="mr-3" />
+            <p onClick={() => navigate('/cart')}>
+              <ShoppingCartOutlinedIcon className="mr-3 cursor-pointer" />
+            </p>
             <AccountCircleOutlinedIcon />
           </div>
         </div>

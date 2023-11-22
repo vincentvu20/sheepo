@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import jwtDecode from 'jwt-decode';
-import { ILogin, UserType } from '@/models/authentication.model';
+import { ILogin, ISignup, UserType } from '@/models/authentication.model';
 import { NetworkService } from '@/services/network-service';
 import { IAuthState } from './types';
 
@@ -29,6 +29,23 @@ export const login = createAsyncThunk(
   async (body: ILogin, { rejectWithValue }) => {
     try {
       const { data } = await NetworkService.post('LOGIN', body);
+      if (data && data?.accessToken) {
+        return {
+          ...data,
+          type: UserType.Buyer,
+        };
+      }
+    } catch (error: any) {
+      throw rejectWithValue(error);
+    }
+  },
+);
+
+export const signup = createAsyncThunk(
+  `${PREFIX_AUTH_SLICE}SIGNUP`,
+  async (body: ISignup, { rejectWithValue }) => {
+    try {
+      const { data } = await NetworkService.post('SIGNUP', body);
       if (data && data?.accessToken) {
         return {
           ...data,
